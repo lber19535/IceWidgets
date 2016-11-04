@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    
+    <color name="selector_add_background">#4CAF50</color>
+    <color name="selector_freeze_background">#42A5F5</color>
+    <color name="freeze_circle_bg_normal">#8800B0FF</color>
+    <color name="freeze_circle_bg_press">#00B0FF</color>
+</resources>

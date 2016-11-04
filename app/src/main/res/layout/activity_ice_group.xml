@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.bill.icewidgets.vm.AppGroupVM" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/widgets_dialog_width"
+        android:layout_height="@dimen/widgets_dialog_height"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:id="@+id/add"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:onClick="@{vm::onClickAdd}"
+                app:srcCompat="@drawable/ic_add_white" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:hint="@string/default_group_name"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:text="@={vm.groupName}"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+
+            <ImageView
+                android:id="@+id/settings"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:onClick="@{vm::onClickSettings}"
+                app:srcCompat="@drawable/ic_settings_white" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/app_item_group_width"
+            android:layout_height="@dimen/app_item_group_height"
+            android:layout_margin="8dp"
+            android:onClick="@{vm.closeWindow}"
+            android:visibility="@{vm.isEmpty ? View.VISIBLE : View.GONE}">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/empty_group_tips"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/app_item_group_width"
+            android:layout_height="@dimen/app_item_group_height"
+            android:layout_margin="8dp"
+            android:visibility="@{vm.isEmpty ? View.GONE : View.VISIBLE}">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
+                <android.support.v7.widget.GridLayout
+                    android:id="@+id/app_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:columnCount="3" />
+
+            </ScrollView>
+
+
+            <ImageView
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/freeze_circle_bg"
+                android:onClick="@{vm.onFreezeClick}"
+                app:srcCompat="@drawable/ic_ac_unit_white" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</layout>

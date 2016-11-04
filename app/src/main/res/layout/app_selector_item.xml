@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.bill.icewidgets.utils.AppItemTypeConverter" />
+
+        <variable
+            name="vm"
+            type="com.bill.icewidgets.vm.AppSelectorItemVM" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@{AppItemTypeConverter.handleAppItemType(vm.type)}"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp">
+
+        <ImageView
+            android:id="@+id/app_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@{vm.icon}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/app_name"
+                    android:layout_width="128dp"
+                    android:layout_height="26dp"
+                    android:ellipsize="end"
+                    android:text="@{vm.label}"
+                    android:textSize="18sp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/group_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:text="@{vm.groupName}"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/package_name"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_marginTop="2dp"
+                android:text="@{vm.pkgName}"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
