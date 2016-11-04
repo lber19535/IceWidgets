@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.bill.icewidgets.BuildConfig;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

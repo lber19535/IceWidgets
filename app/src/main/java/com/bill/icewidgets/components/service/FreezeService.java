@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.bill.icewidgets.App;
 import com.stericson.RootShell.exceptions.RootDeniedException;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootShell.execution.Shell;

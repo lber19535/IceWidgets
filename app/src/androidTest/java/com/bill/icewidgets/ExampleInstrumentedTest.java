@@ -1,19 +1,11 @@
 package com.bill.icewidgets;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.List;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Instrumentation test, which will execute on an Android device.

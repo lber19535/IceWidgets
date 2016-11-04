@@ -4,7 +4,6 @@ import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 
 import com.bill.icewidgets.BuildConfig;

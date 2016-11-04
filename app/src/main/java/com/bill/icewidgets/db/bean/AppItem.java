@@ -1,14 +1,9 @@
 package com.bill.icewidgets.db.bean;
 
-import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
-import android.graphics.drawable.Drawable;
-
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
 
 /**
  * Created by Bill on 2016/10/26.
@@ -23,7 +18,7 @@ public class AppItem extends RealmObject {
     @Ignore
     public static final int ITEM_TYPE_ADD = 1 << 0;
     @Ignore
-    public static final int ITEM_TYPE_FREEZE = 2 << 0;
+    public static final int ITEM_TYPE_FREEZE = 1 << 1;
     @Ignore
     public static final int ITEM_TYPE_NONE = 0;
 
