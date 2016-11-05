@@ -11,6 +11,7 @@ import com.bill.icewidgets.BuildConfig;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.pm.PackageManager.GET_DISABLED_COMPONENTS;
 import static android.content.pm.PackageManager.GET_META_DATA;
 import static android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS;
 
@@ -29,7 +30,13 @@ public class AppInfoUtils {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | MATCH_DISABLED_COMPONENTS);
+
+        List<ResolveInfo> resolveInfos = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | MATCH_DISABLED_COMPONENTS);
+        }else {
+            resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | GET_DISABLED_COMPONENTS);
+        }
 
         for (int i = 0; i < resolveInfos.size(); i++) {
             infos.add(resolveInfos.get(i).activityInfo.applicationInfo);

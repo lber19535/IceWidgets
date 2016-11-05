@@ -1,7 +1,6 @@
 package com.bill.icewidgets;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
@@ -13,8 +12,6 @@ import io.realm.Realm;
  */
 
 public class App extends Application {
-
-    private static Context context;
 
     @Override
     public void onCreate() {
@@ -29,11 +26,7 @@ public class App extends Application {
                             .build());
         }
 
-        context = this;
-
     }
 
-    public static Context getAppCtx() {
-        return context;
-    }
+
 }

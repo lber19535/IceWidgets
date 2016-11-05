@@ -69,7 +69,7 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
 
         appGroupModel = AppGroupManager.getGroupModel(widgetsId);
 
-        itemVMs = appGroupModel.loadAppGroupInfo();
+        itemVMs = appGroupModel.loadAppGroupInfo(iceGroupBinding.getRoot().getContext());
 
         if (DEBUG) {
             for (AppItemVM vm : itemVMs) {

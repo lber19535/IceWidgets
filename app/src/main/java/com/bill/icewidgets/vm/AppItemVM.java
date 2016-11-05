@@ -70,11 +70,5 @@ public class AppItemVM {
             Log.d(TAG, msg);
     }
 
-    public static Drawable handleNeedFreeze(boolean needfreeze) {
-        Resources res = App.getAppCtx().getResources();
-        if (!needfreeze)
-            return res.getDrawable(R.drawable.ic_ac_unit_green);
-        else
-            return res.getDrawable(R.drawable.ic_ac_unit_white);
-    }
+
 }

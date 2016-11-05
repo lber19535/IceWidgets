@@ -5,5 +5,5 @@ package com.bill.icewidgets.vm;
  */
 public interface VM {
 
-    public void destroy();
+    void destroy();
 }

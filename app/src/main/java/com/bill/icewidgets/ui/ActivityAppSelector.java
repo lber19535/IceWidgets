@@ -50,7 +50,7 @@ public class ActivityAppSelector extends AppCompatActivity implements ActivityCo
         finish();
     }
 
-    public static interface OnFinished {
+    public interface OnFinished {
         void finishActivity();
     }
 }

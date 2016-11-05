@@ -1,5 +1,6 @@
 package com.bill.icewidgets.model;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
@@ -23,9 +24,9 @@ public class AppSelectorModel {
     private static final boolean DEBUG = BuildConfig.DEBUG;
     private Realm realm;
 
-    public List<AppSelectorItemVM> loadApp() {
+    public List<AppSelectorItemVM> loadApp(Context context) {
         realm = Realm.getDefaultInstance();
-        final PackageManager pm = App.getAppCtx().getPackageManager();
+        final PackageManager pm = context.getPackageManager();
         final List<ApplicationInfo> installedApplications = AppInfoUtils.getAppInfos(pm);
 
         final List<AppSelectorItemVM> models = new ArrayList<>();

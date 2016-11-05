@@ -1,5 +1,6 @@
 package com.bill.icewidgets.model;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
@@ -31,8 +32,8 @@ public class AppGroupModel {
         this.widgetsId = widgetsId;
     }
 
-    public List<AppItemVM> loadAppGroupInfo() {
-        PackageManager pm = App.getAppCtx().getPackageManager();
+    public List<AppItemVM> loadAppGroupInfo(Context context) {
+        PackageManager pm = context.getPackageManager();
         Realm realm = Realm.getDefaultInstance();
         RealmResults<AppItem> appItems = realm.where(AppItem.class).equalTo("widgetsId", widgetsId).findAll();
         List<AppItemVM> items = new ArrayList<>();

@@ -1,6 +1,7 @@
 package com.bill.icewidgets.vm;
 
 import android.databinding.BindingAdapter;
+import android.databinding.Observable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,7 +59,7 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
         Task.callInBackground(new Callable<List<AppSelectorItemVM>>() {
             @Override
             public List<AppSelectorItemVM> call() throws Exception {
-                return model.loadApp();
+                return model.loadApp(binding.getRoot().getContext());
             }
         }).continueWith(new Continuation<List<AppSelectorItemVM>, Void>() {
             @Override
