@@ -6,5 +6,5 @@ package com.bill.icewidgets.vm;
 
 public interface ActivityController {
 
-    void finishActivity();
+//    void finishActivity();
 }

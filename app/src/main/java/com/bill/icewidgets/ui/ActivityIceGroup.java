@@ -9,17 +9,21 @@ import android.util.Log;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
-import com.bill.icewidgets.databinding.ActivityIceGroupBinding;
 import com.bill.icewidgets.components.IceWidgets;
-import com.bill.icewidgets.vm.ActivityController;
+import com.bill.icewidgets.databinding.ActivityIceGroupBinding;
+import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
 import com.bill.icewidgets.vm.AppGroupVM;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 
 /**
  * Created by Bill on 2016/10/21.
  */
 
-public class ActivityIceGroup extends AppCompatActivity implements ActivityController{
+public class ActivityIceGroup extends AppCompatActivity {
 
     private static final String TAG = "ActivityIceGroup";
     private static final boolean DEBUG = BuildConfig.DEBUG;
@@ -47,14 +51,23 @@ public class ActivityIceGroup extends AppCompatActivity implements ActivityContr
                 appGroupVM = new AppGroupVM(iceGroupBinding, widgetsId);
                 iceGroupBinding.setVm(appGroupVM);
                 logd("APP_WIDGETS_ID is " + widgetsId);
-                appGroupVM.setActivityController(this);
-
-//                appGroupVM.loadGroup(widgetsId);
 
             }
         } else {
             finish();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -75,8 +88,8 @@ public class ActivityIceGroup extends AppCompatActivity implements ActivityContr
             Log.d(TAG, msg);
     }
 
-    @Override
-    public void finishActivity() {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCloseActivityMessage(CloseIceGroupEvent event) {
         finish();
     }
 }

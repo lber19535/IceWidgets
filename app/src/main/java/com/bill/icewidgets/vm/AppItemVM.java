@@ -13,6 +13,9 @@ import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.components.service.FreezeService;
 import com.bill.icewidgets.db.bean.AppItem;
+import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.realm.Realm;
 
@@ -31,7 +34,6 @@ public class AppItemVM {
     public final ObservableBoolean needFreeze = new ObservableBoolean();
 
     private String packageName = "";
-    private ActivityController controller;
 
     public String getPackageName() {
         return packageName;
@@ -54,16 +56,14 @@ public class AppItemVM {
         });
         // launch app
         FreezeService.launchApp(context, packageName);
-        controller.finishActivity();
+
+        EventBus.getDefault().post(new CloseIceGroupEvent());
     }
 
     public void setPackageName(String packageName) {
         this.packageName = packageName;
     }
 
-    public void setActivityController(ActivityController controller) {
-        this.controller = controller;
-    }
 
     private void logd(String msg) {
         if (DEBUG)

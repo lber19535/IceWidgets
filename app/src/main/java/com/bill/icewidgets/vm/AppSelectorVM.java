@@ -1,7 +1,6 @@
 package com.bill.icewidgets.vm;
 
 import android.databinding.BindingAdapter;
-import android.databinding.Observable;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,11 +11,15 @@ import com.bill.icewidgets.components.IceWidgets;
 import com.bill.icewidgets.components.service.FreezeService;
 import com.bill.icewidgets.databinding.ActivityAppSelectorBinding;
 import com.bill.icewidgets.db.bean.AppItem;
+import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
 import com.bill.icewidgets.model.AppSelectorModel;
 import com.bill.icewidgets.ui.adapter.AppSelectorAdapter;
+import com.bill.icewidgets.ui.events.CloseSelectorEvent;
 import com.bill.icewidgets.ui.listener.OnRVItemClickListener;
 import com.bill.icewidgets.ui.listener.OnRVItemLongClickListener;
 import com.pnikosis.materialishprogress.ProgressWheel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,11 +154,7 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
             });
         }
 
-        controller.finishActivity();
-    }
-
-    public void setActivityController(ActivityController controller) {
-        this.controller = controller;
+        EventBus.getDefault().post(new CloseSelectorEvent());
     }
 
     @Override

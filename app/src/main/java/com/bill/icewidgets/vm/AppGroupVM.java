@@ -22,7 +22,11 @@ import com.bill.icewidgets.model.AppGroupManager;
 import com.bill.icewidgets.model.AppGroupModel;
 import com.bill.icewidgets.ui.ActivityAppSelector;
 import com.bill.icewidgets.ui.SettingsActivity;
+import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
+import com.bill.icewidgets.ui.events.CloseSelectorEvent;
 import com.bill.icewidgets.utils.AppStatusUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +107,6 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
             }
             binding.getRoot().setLayoutParams(params);
             AppItemVM itemVM = itemVMs.get(i - 1);
-            itemVM.setActivityController(this);
             binding.setVm(itemVM);
 
             iceGroupBinding.appContainer.addView(binding.getRoot());
@@ -163,15 +166,13 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
             }
         }
         FreezeService.startFreezeApps(iceGroupBinding.getRoot().getContext(), pkgs.toArray(new CharSequence[pkgs.size()]));
-        controller.finishActivity();
+
+        closeWindow(null);
     }
 
     public void closeWindow(View v) {
-        controller.finishActivity();
+        EventBus.getDefault().post(new CloseIceGroupEvent());
     }
 
-    @Override
-    public void finishActivity() {
-        controller.finishActivity();
-    }
+
 }
