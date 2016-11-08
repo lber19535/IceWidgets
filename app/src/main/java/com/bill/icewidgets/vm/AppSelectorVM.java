@@ -1,9 +1,14 @@
 package com.bill.icewidgets.vm;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
 
 import com.bill.icewidgets.BuildConfig;
@@ -32,7 +37,7 @@ import io.realm.Realm;
 /**
  * Created by Bill on 2016/10/23.
  */
-public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemClickListener {
+public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
     private static final String TAG = "AppSelectorVM";
     private static final boolean DEBUG = BuildConfig.DEBUG;
 
@@ -46,6 +51,7 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
     private List<AppSelectorItemVM> addItemsVms = new ArrayList<>();
     private int widgetsId;
     private ActivityController controller;
+    private AppSelectorAdapter adapter;
 
     public final ObservableInt progressVisibility = new ObservableInt(View.VISIBLE);
     public final ObservableBoolean progressIndeterminate = new ObservableBoolean(true);
@@ -68,7 +74,11 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
             @Override
             public Void then(Task<List<AppSelectorItemVM>> task) throws Exception {
                 items = task.getResult();
-                AppSelectorAdapter adapter = new AppSelectorAdapter(items);
+                if (adapter != null) {
+                    adapter.replaceAll(items);
+                } else {
+                    adapter = new AppSelectorAdapter(items);
+                }
                 binding.allList.setAdapter(adapter);
                 binding.allList.setHasFixedSize(true);
                 adapter.setOnClickListener(AppSelectorVM.this);
@@ -220,5 +230,33 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
         } else {
             progressWheel.stopSpinning();
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Log.d(TAG, "onQueryTextSubmit: query " + query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.d(TAG, "onQueryTextChange: newText is " + newText);
+        adapter.getFilter().filter(newText);
+        return true;
+    }
+
+    public void handleSearchIntent(Intent intent) {
+        Log.d(TAG, "handleSearchIntent: ");
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            //use the query to search your data somehow
+        }
+    }
+
+    @Override
+    public boolean onClose() {
+        Log.d(TAG, "onClose: ");
+        loadAppsAsync();
+        return true;
     }
 }

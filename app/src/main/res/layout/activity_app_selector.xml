@@ -13,9 +13,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/barlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Toolbar.Theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="0dp"></android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/barlayout">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/all_list"
@@ -28,8 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="32dp"
                 android:background="@color/colorPrimary"
-                android:onClick="@{vm.onFabClick}"
                 android:clickable="true"
+                android:onClick="@{vm.onFabClick}"
                 app:elevation="0dp"
                 app:layout_anchor="@id/all_list"
                 app:layout_anchorGravity="bottom|right|end"

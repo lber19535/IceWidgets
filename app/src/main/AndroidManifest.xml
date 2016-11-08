@@ -29,7 +29,14 @@
                 android:resource="@xml/ice_widgets_info" />
         </receiver>
 
-        <activity android:name=".ui.ActivityAppSelector" />
+        <activity android:name=".ui.ActivityAppSelector" android:launchMode="singleTop">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".components.service.FreezeService"
@@ -38,7 +45,8 @@
 
         <activity
             android:name=".ui.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+
     </application>
 
 </manifest>

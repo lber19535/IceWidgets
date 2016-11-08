@@ -1,17 +1,42 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="searchViewStyle">@style/AppSearchView</item>
+    </style>
+
+    <style name="AppSearchView" parent="Widget.AppCompat.Light.SearchView">
+        <item name="searchHintIcon">@null</item>
+        <item name="queryHint">@string/search_app_hint</item>
     </style>
 
     <style name="Theme.Dialog.NoTitle" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Toolbar.Subtitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Toolbar.Popup" parent="ThemeOverlay.AppCompat.Light">
+    </style>
+
+    <style name="Toolbar.Theme" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/Toolbar.Title</item>
+        <item name="subtitleTextAppearance">@style/Toolbar.Subtitle</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="popupTheme">@style/Toolbar.Popup</item>
     </style>
 
 </resources>

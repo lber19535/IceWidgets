@@ -1,6 +1,7 @@
 package com.bill.icewidgets;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
@@ -25,6 +26,8 @@ public class App extends Application {
                             .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                             .build());
         }
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
     }
 
