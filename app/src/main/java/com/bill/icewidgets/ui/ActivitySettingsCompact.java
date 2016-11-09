@@ -8,12 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
 
 /**
@@ -22,6 +24,8 @@ import com.bill.icewidgets.R;
  */
 public abstract class ActivitySettingsCompact extends PreferenceActivity {
 
+    private static final String TAG = "ActivitySettingsCompact";
+    private static final boolean DEBUG = BuildConfig.DEBUG;
     private AppCompatDelegate mDelegate;
 
     @Override
@@ -29,6 +33,13 @@ public abstract class ActivitySettingsCompact extends PreferenceActivity {
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        getDelegate().onPostCreate(savedInstanceState);
 
         View inflate = getLayoutInflater().inflate(R.layout.toolbar, (ViewGroup) findViewById(android.R.id.content));
         Toolbar toolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
@@ -41,18 +52,30 @@ public abstract class ActivitySettingsCompact extends PreferenceActivity {
          *
          * When we use a single layout for setSupportActionBar method, the toolbar layout will overlay the ListView. PreferenceActivity is ListActivity,
          *  so we can get ListView by getListView method, and set it's top margins to not be covered.
+         *
+         *
          */
-        int topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (int) getResources().getDimension(R.dimen.activity_vertical_margin) + 30, getResources().getDisplayMetrics());
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) getListView().getLayoutParams();
-        layoutParams.setMargins(0, topMargin, 0, 0);
-        getListView().setLayoutParams(layoutParams);
+        TypedValue tv = new TypedValue();
+        int topMargin = 0;
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            logd("onPostCreate resolve attr success");
+            topMargin = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+            logd("onPostCreate get toolbar height");
+        }
 
-    }
+        if (getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT) == null) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) getListView().getLayoutParams();
+            layoutParams.setMargins(0, topMargin, 0, 0);
+            getListView().setLayoutParams(layoutParams);
+        } else {
+            int identifier = getResources().getSystem().getIdentifier("prefs_frame", "id", "android");
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(identifier).getLayoutParams();
+            layoutParams.setMargins(0, topMargin, 0, 0);
+            findViewById(identifier).setLayoutParams(layoutParams);
+        }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        getDelegate().onPostCreate(savedInstanceState);
+        String initialFragment = getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT);
+        logd("onPostCreate: initialFragment " + initialFragment);
     }
 
     public ActionBar getSupportActionBar() {
@@ -127,5 +150,10 @@ public abstract class ActivitySettingsCompact extends PreferenceActivity {
             mDelegate = AppCompatDelegate.create(this, null);
         }
         return mDelegate;
+    }
+
+    private void logd(String msg) {
+        if (DEBUG)
+            Log.d(TAG, msg);
     }
 }
