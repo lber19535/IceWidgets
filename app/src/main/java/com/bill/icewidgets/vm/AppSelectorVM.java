@@ -35,7 +35,7 @@ import io.realm.Realm;
 /**
  * Created by Bill on 2016/10/23.
  */
-public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemClickListener, SearchView.OnQueryTextListener {
     private static final String TAG = "AppSelectorVM";
     private static final boolean DEBUG = BuildConfig.DEBUG;
 
@@ -92,7 +92,7 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
 
     }
 
-    public void showAllItems(){
+    public void showAllItems() {
         adapter.showAll();
     }
 
@@ -255,10 +255,4 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
         }
     }
 
-    @Override
-    public boolean onClose() {
-        Log.d(TAG, "onClose: ");
-        loadAppsAsync();
-        return true;
-    }
 }

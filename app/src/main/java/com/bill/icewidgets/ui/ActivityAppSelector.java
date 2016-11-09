@@ -63,7 +63,6 @@ public class ActivityAppSelector extends AppCompatActivity {
                 searchManager.getSearchableInfo(getComponentName()));
 
         searchView.setOnQueryTextListener(appSelectedVM);
-        searchView.setOnCloseListener(appSelectedVM);
 
         MenuItemCompat.setOnActionExpandListener(search, new MenuItemCompat.OnActionExpandListener() {
             @Override
