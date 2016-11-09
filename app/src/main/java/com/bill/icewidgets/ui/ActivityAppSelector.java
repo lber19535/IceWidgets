@@ -67,13 +67,13 @@ public class ActivityAppSelector extends AppCompatActivity {
         MenuItemCompat.setOnActionExpandListener(search, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
-                Log.d(TAG, "onMenuItemActionExpand: ");
+                logd("onMenuItemActionExpand: ");
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                Log.d(TAG, "onMenuItemActionCollapse: ");
+                logd("onMenuItemActionCollapse: ");
                 appSelectedVM.showAllItems();
                 return true;
             }
