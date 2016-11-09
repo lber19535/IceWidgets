@@ -21,9 +21,8 @@ import com.bill.icewidgets.db.bean.NameIdPair;
 import com.bill.icewidgets.model.AppGroupManager;
 import com.bill.icewidgets.model.AppGroupModel;
 import com.bill.icewidgets.ui.ActivityAppSelector;
-import com.bill.icewidgets.ui.SettingsActivity;
+import com.bill.icewidgets.ui.ActivitySettings;
 import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
-import com.bill.icewidgets.ui.events.CloseSelectorEvent;
 import com.bill.icewidgets.utils.AppStatusUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -122,7 +121,7 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
     }
 
     public void onClickSettings(View v) {
-        Intent intent = new Intent(v.getContext(), SettingsActivity.class);
+        Intent intent = new Intent(v.getContext(), ActivitySettings.class);
         v.getContext().startActivity(intent);
     }
 
