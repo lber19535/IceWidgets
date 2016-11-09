@@ -1,16 +1,22 @@
 package com.bill.icewidgets.ui;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.components.IceWidgets;
 import com.bill.icewidgets.databinding.ActivityAppSelectorBinding;
-import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
 import com.bill.icewidgets.ui.events.CloseSelectorEvent;
 import com.bill.icewidgets.vm.AppSelectorVM;
 
@@ -36,7 +42,53 @@ public class ActivityAppSelector extends AppCompatActivity {
         binding.setVm(appSelectedVM);
 
         appSelectedVM.loadAppsAsync();
+
+        setSupportActionBar(binding.toolbar);
+
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.selector_search_menu, menu);
+        MenuItem search = menu.findItem(R.id.search);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) MenuItemCompat.getActionView(search);
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(appSelectedVM);
+        searchView.setOnCloseListener(appSelectedVM);
+
+        MenuItemCompat.setOnActionExpandListener(search, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                Log.d(TAG, "onMenuItemActionExpand: ");
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                Log.d(TAG, "onMenuItemActionCollapse: ");
+                appSelectedVM.showAllItems();
+                return true;
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        appSelectedVM.handleSearchIntent(intent);
+    }
+
 
     @Override
     protected void onStart() {

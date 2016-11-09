@@ -6,6 +6,7 @@
     <string name="title_activity_settings">Settings</string>
     <string name="empty_group_tips">Please add app</string>
     <string name="default_group_name">Group Name</string>
+    <string name="search_app_hint">Input app name</string>
 
     <!-- Strings related to Settings -->
 
