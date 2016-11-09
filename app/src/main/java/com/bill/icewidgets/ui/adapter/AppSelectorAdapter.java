@@ -21,6 +21,7 @@ public class AppSelectorAdapter extends BaseRVAdapter<AppSelectorViewHolder> imp
     private static final String TAG = "AppSelectorAdapter";
     private static final boolean DEBUG = BuildConfig.DEBUG;
 
+    private List<AppSelectorItemVM> mOriginalValues;
     private List<AppSelectorItemVM> vms;
     private AppNameFilter filter;
 
@@ -47,6 +48,13 @@ public class AppSelectorAdapter extends BaseRVAdapter<AppSelectorViewHolder> imp
 
     public void replaceAll(List<AppSelectorItemVM> items) {
         this.vms = items;
+        this.mOriginalValues.clear();
+    }
+
+    public void showAll() {
+        if (!mOriginalValues.isEmpty())
+            vms = mOriginalValues;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -62,14 +70,22 @@ public class AppSelectorAdapter extends BaseRVAdapter<AppSelectorViewHolder> imp
         return filter;
     }
 
+    public List<AppSelectorItemVM> getItems() {
+        return vms;
+    }
+
     private class AppNameFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence appName) {
             FilterResults filterResults = new FilterResults();
             List<AppSelectorItemVM> results = new ArrayList<>();
-            List<AppSelectorItemVM> oringinal = new ArrayList<>(vms);
-            for (AppSelectorItemVM item : vms) {
-                if (item.label.get().contains(appName)) {
+            if (mOriginalValues == null || mOriginalValues.isEmpty()) {
+                mOriginalValues = new ArrayList<>(vms);
+            }
+            for (AppSelectorItemVM item : mOriginalValues) {
+                String lowLabel = item.label.get().toLowerCase();
+                String lowAppName = appName.toString().toLowerCase();
+                if (lowLabel.contains(lowAppName)) {
                     results.add(item);
                 }
             }

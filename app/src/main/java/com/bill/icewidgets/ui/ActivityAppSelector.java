@@ -3,12 +3,10 @@ package com.bill.icewidgets.ui;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SearchRecentSuggestionsProvider;
 import android.databinding.DataBindingUtil;
-import android.provider.SearchRecentSuggestions;
+import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -19,7 +17,6 @@ import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.components.IceWidgets;
 import com.bill.icewidgets.databinding.ActivityAppSelectorBinding;
-import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
 import com.bill.icewidgets.ui.events.CloseSelectorEvent;
 import com.bill.icewidgets.vm.AppSelectorVM;
 
@@ -78,7 +75,7 @@ public class ActivityAppSelector extends AppCompatActivity {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
                 Log.d(TAG, "onMenuItemActionCollapse: ");
-                appSelectedVM.loadAppsAsync();
+                appSelectedVM.showAllItems();
                 return true;
             }
         });

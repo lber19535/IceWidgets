@@ -6,7 +6,6 @@ import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.bill.icewidgets.components.IceWidgets;
 import com.bill.icewidgets.components.service.FreezeService;
 import com.bill.icewidgets.databinding.ActivityAppSelectorBinding;
 import com.bill.icewidgets.db.bean.AppItem;
-import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
 import com.bill.icewidgets.model.AppSelectorModel;
 import com.bill.icewidgets.ui.adapter.AppSelectorAdapter;
 import com.bill.icewidgets.ui.events.CloseSelectorEvent;
@@ -50,7 +48,7 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
     private List<AppSelectorItemVM> removeItemsVms = new ArrayList<>();
     private List<AppSelectorItemVM> addItemsVms = new ArrayList<>();
     private int widgetsId;
-    private ActivityController controller;
+
     private AppSelectorAdapter adapter;
 
     public final ObservableInt progressVisibility = new ObservableInt(View.VISIBLE);
@@ -92,6 +90,10 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
             }
         }, Task.UI_THREAD_EXECUTOR);
 
+    }
+
+    public void showAllItems(){
+        adapter.showAll();
     }
 
     public void onFabClick(View v) {
@@ -174,7 +176,7 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
 
     @Override
     public void onItemClick(View v, final int position) {
-        AppSelectorItemVM item = items.get(position);
+        AppSelectorItemVM item = adapter.getItems().get(position);
 
         changeFreezeItems(item);
 
@@ -182,7 +184,7 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
 
     @Override
     public void onItemLongClick(View v, int position) {
-        AppSelectorItemVM item = items.get(position);
+        AppSelectorItemVM item = adapter.getItems().get(position);
 
         changeAddItems(item);
 

@@ -1,6 +1,7 @@
 package com.bill.icewidgets.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.bill.icewidgets.BuildConfig;
@@ -26,6 +27,8 @@ public abstract class BaseRVAdapter<VH extends RecyclerView.ViewHolder> extends 
         holder.itemView.setOnClickListener(this);
         holder.itemView.setOnLongClickListener(this);
         positionMap.put(holder.itemView, position);
+        logd("onBindViewHolder: position " + position);
+        logd("onBindViewHolder: item " + holder.itemView);
 
     }
 
@@ -46,6 +49,12 @@ public abstract class BaseRVAdapter<VH extends RecyclerView.ViewHolder> extends 
 
     public void setOnLongClickListener(OnRVItemLongClickListener listener) {
         longClickListener = listener;
+    }
+
+    private void logd(String msg) {
+        if (DEBUG)
+            Log.d(TAG, msg);
+
     }
 
 
