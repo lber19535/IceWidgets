@@ -3,24 +3,23 @@ package com.bill.icewidgets.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
-import android.view.MenuItem;
 
 import com.bill.icewidgets.R;
+import com.bill.icewidgets.ui.settings.AboutPreferenceFragment;
+import com.bill.icewidgets.ui.settings.ServicePreferenceFragment;
+import com.bill.icewidgets.ui.settings.ThemePreferenceFragment;
 
 import java.util.List;
 
@@ -118,19 +117,6 @@ public class ActivitySettings extends ActivitySettingsCompact {
                         .getString(preference.getKey(), ""));
     }
 
-
-
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-//    private void setupActionBar() {
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            // Show the Up button in the action bar.
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//        }
-//    }
-
     /**
      * {@inheritDoc}
      */
@@ -157,97 +143,6 @@ public class ActivitySettings extends ActivitySettingsCompact {
                 || ThemePreferenceFragment.class.getName().equals(fragmentName)
                 || AboutPreferenceFragment.class.getName().equals(fragmentName)
                 || ServicePreferenceFragment.class.getName().equals(fragmentName);
-    }
-
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class ThemePreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_theme);
-//            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-//            bindPreferenceSummaryToValue(findPreference("example_text"));
-//            bindPreferenceSummaryToValue(findPreference("example_list"));
-        }
-
-//        @Override
-//        public boolean onOptionsItemSelected(MenuItem item) {
-//            int id = item.getItemId();
-//            if (id == android.R.id.home) {
-//                startActivity(new Intent(getActivity(), ActivitySettings.class));
-//                return true;
-//            }
-//            return super.onOptionsItemSelected(item);
-//        }
-    }
-
-    /**
-     * This fragment shows notification preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class ServicePreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_service);
-//            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-//            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-        }
-
-//        @Override
-//        public boolean onOptionsItemSelected(MenuItem item) {
-//            int id = item.getItemId();
-//            if (id == android.R.id.home) {
-//                startActivity(new Intent(getActivity(), ActivitySettings.class));
-//                return true;
-//            }
-//            return super.onOptionsItemSelected(item);
-//        }
-    }
-
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class AboutPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_about);
-//            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-//            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
-
-//        @Override
-//        public boolean onOptionsItemSelected(MenuItem item) {
-//            int id = item.getItemId();
-//            if (id == android.R.id.home) {
-//                startActivity(new Intent(getActivity(), ActivitySettings.class));
-//                return true;
-//            }
-//            return super.onOptionsItemSelected(item);
-//        }
     }
 
 }
