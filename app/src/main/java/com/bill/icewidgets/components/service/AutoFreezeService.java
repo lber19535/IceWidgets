@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.db.bean.AppItem;
 
 import java.util.concurrent.Callable;
@@ -27,7 +28,8 @@ import static com.bill.icewidgets.db.bean.AppItem.ITEM_TYPE_FREEZE;
 public class AutoFreezeService extends JobService {
 
     private static final String TAG = "AutoFreezeService";
-    private static final int DELAY_ATUO_JOB_ID = 1;
+    private static final boolean DEBUG = BuildConfig.DEBUG;
+    private static final int DELAY_AUTO_JOB_ID = 1;
 
     private static final String ACTION_DELAY_AUTO_FREEZE = "com.bill.icewidgets.DELAY_AUTO_FREEZE";
     private static final String ACTION_STOP_DELAY_AUTO_FREEZE = "com.bill.icewidgets.STOP_DELAY_AUTO_FREEZE";
@@ -61,7 +63,7 @@ public class AutoFreezeService extends JobService {
                 handleStopDelayAutoFreeze();
                 break;
             default:
-                Log.d(TAG, "onStartCommand: unknown action " + action);
+                logd("onStartCommand: unknown action " + action);
         }
 
 
@@ -71,18 +73,18 @@ public class AutoFreezeService extends JobService {
     private void handleStartDelayAutoFreeze(long time) {
         Log.d(TAG, "handleStartDelayAutoFreeze: start delay time is " + time);
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        JobInfo.Builder builder = new JobInfo.Builder(DELAY_ATUO_JOB_ID, new ComponentName(getPackageName(), AutoFreezeService.class.getName()));
+        JobInfo.Builder builder = new JobInfo.Builder(DELAY_AUTO_JOB_ID, new ComponentName(getPackageName(), AutoFreezeService.class.getName()));
         builder.setPeriodic(time);
         int code = scheduler.schedule(builder.build());
         if (code <= 0) {
-            Log.d(TAG, "handleStartDelayAutoFreeze: something wrong, error code is " + code);
+            logd("handleStartDelayAutoFreeze: something wrong, error code is " + code);
         }
     }
 
     private void handleStopDelayAutoFreeze() {
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        scheduler.cancel(DELAY_ATUO_JOB_ID);
-        Log.d(TAG, "handleStopDelayAutoFreeze: job canceled");
+        scheduler.cancel(DELAY_AUTO_JOB_ID);
+        logd("handleStopDelayAutoFreeze: job canceled");
     }
 
     @Override
@@ -101,6 +103,7 @@ public class AutoFreezeService extends JobService {
                 CharSequence[] pkgs = new CharSequence[all.size()];
                 for (int i = 0; i < all.size(); i++) {
                     pkgs[i] = all.get(i).getPackageName();
+                    logd("need freeze pkg " + pkgs[i]);
                 }
 
                 FreezeService.startFreezeApps(AutoFreezeService.this, pkgs);
@@ -115,5 +118,10 @@ public class AutoFreezeService extends JobService {
     public boolean onStopJob(JobParameters params) {
         Log.d(TAG, "onStopJob: job stop");
         return false;
+    }
+
+    private void logd(String msg) {
+        if (DEBUG)
+            Log.d(TAG, msg);
     }
 }

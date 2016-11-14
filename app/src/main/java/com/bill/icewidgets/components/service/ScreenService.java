@@ -51,6 +51,7 @@ public class ScreenService extends Service {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            logd(intent.getAction());
             String action = intent.getAction();
             switch (action) {
                 case Intent.ACTION_SCREEN_OFF:
