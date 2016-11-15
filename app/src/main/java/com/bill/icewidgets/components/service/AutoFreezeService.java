@@ -29,7 +29,7 @@ public class AutoFreezeService extends JobService {
 
     private static final String TAG = "AutoFreezeService";
     private static final boolean DEBUG = BuildConfig.DEBUG;
-    private static final int DELAY_AUTO_JOB_ID = 1;
+    private static int DELAY_AUTO_JOB_ID = 1;
 
     private static final String ACTION_DELAY_AUTO_FREEZE = "com.bill.icewidgets.DELAY_AUTO_FREEZE";
     private static final String ACTION_STOP_DELAY_AUTO_FREEZE = "com.bill.icewidgets.STOP_DELAY_AUTO_FREEZE";
@@ -55,7 +55,6 @@ public class AutoFreezeService extends JobService {
         switch (action) {
             case ACTION_DELAY_AUTO_FREEZE: {
                 long time = intent.getLongExtra(EXTRAS_TIME, 0);
-
                 handleStartDelayAutoFreeze(time);
                 break;
             }
@@ -73,22 +72,27 @@ public class AutoFreezeService extends JobService {
     private void handleStartDelayAutoFreeze(long time) {
         Log.d(TAG, "handleStartDelayAutoFreeze: start delay time is " + time);
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        JobInfo.Builder builder = new JobInfo.Builder(DELAY_AUTO_JOB_ID, new ComponentName(getPackageName(), AutoFreezeService.class.getName()));
-        builder.setPeriodic(time);
+        JobInfo.Builder builder = new JobInfo.Builder(DELAY_AUTO_JOB_ID++, new ComponentName(getPackageName(), AutoFreezeService.class.getName()));
+        builder.setOverrideDeadline(time);
+//        builder.setRequiresDeviceIdle(true);
         int code = scheduler.schedule(builder.build());
-        if (code <= 0) {
-            logd("handleStartDelayAutoFreeze: something wrong, error code is " + code);
+        switch (code) {
+            case JobScheduler.RESULT_SUCCESS:
+                logd("job schedule success");
+                break;
+            case JobScheduler.RESULT_FAILURE:
+                logd("job schedule failure");
         }
     }
 
     private void handleStopDelayAutoFreeze() {
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        scheduler.cancel(DELAY_AUTO_JOB_ID);
+        scheduler.cancelAll();
         logd("handleStopDelayAutoFreeze: job canceled");
     }
 
     @Override
-    public boolean onStartJob(JobParameters params) {
+    public boolean onStartJob(final JobParameters params) {
         Task.callInBackground(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
@@ -107,6 +111,7 @@ public class AutoFreezeService extends JobService {
                 }
 
                 FreezeService.startFreezeApps(AutoFreezeService.this, pkgs);
+                jobFinished(params, false);
                 return null;
             }
         });

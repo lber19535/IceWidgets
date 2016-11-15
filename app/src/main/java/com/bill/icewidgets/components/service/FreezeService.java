@@ -77,6 +77,10 @@ public class FreezeService extends Service {
     }
 
     private void handleFreezeApp(CharSequence... packageNames) {
+        if (isPackagesNameEmpty(packageNames)) {
+            return;
+        }
+
         if (RootTools.isRootAvailable()) {
             try {
                 final Shell shell = RootTools.getShell(true);
@@ -125,6 +129,10 @@ public class FreezeService extends Service {
     }
 
     private void handleUnfreezeApp(CharSequence... packageNames) {
+        if (isPackagesNameEmpty(packageNames)) {
+            return;
+        }
+
         if (RootTools.isRootAvailable()) {
             try {
                 final Shell shell = RootTools.getShell(true);
@@ -238,6 +246,14 @@ public class FreezeService extends Service {
         logd("launch package " + packageName);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         startActivity(intent);
+    }
+
+    private boolean isPackagesNameEmpty(CharSequence... packageNames) {
+        if (packageNames.length == 0) {
+            logd("package name array is empty");
+            return true;
+        }
+        return false;
     }
 
     private void logd(String msg) {
