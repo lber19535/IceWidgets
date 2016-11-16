@@ -56,6 +56,9 @@ public class FreezeService extends Service {
     }
 
     public static void startFreezeApps(Context context, CharSequence... packageNames) {
+        if (isPackagesNameEmpty(packageNames)) {
+            return;
+        }
         Intent intent = new Intent(context, FreezeService.class);
         intent.setAction(ACTION_FREEZE_APPS);
         intent.putExtra(EXTRA_PACKAGES, packageNames);
@@ -63,6 +66,9 @@ public class FreezeService extends Service {
     }
 
     public static void startUnfreezeApps(Context context, CharSequence... packageNames) {
+        if (isPackagesNameEmpty(packageNames)) {
+            return;
+        }
         Intent intent = new Intent(context, FreezeService.class);
         intent.setAction(ACTION_UNFREEZE_APPS);
         intent.putExtra(EXTRA_PACKAGES, packageNames);
@@ -77,10 +83,7 @@ public class FreezeService extends Service {
     }
 
     private void handleFreezeApp(CharSequence... packageNames) {
-        if (isPackagesNameEmpty(packageNames)) {
-            return;
-        }
-
+        
         if (RootTools.isRootAvailable()) {
             try {
                 final Shell shell = RootTools.getShell(true);
@@ -129,9 +132,6 @@ public class FreezeService extends Service {
     }
 
     private void handleUnfreezeApp(CharSequence... packageNames) {
-        if (isPackagesNameEmpty(packageNames)) {
-            return;
-        }
 
         if (RootTools.isRootAvailable()) {
             try {
@@ -248,7 +248,7 @@ public class FreezeService extends Service {
         startActivity(intent);
     }
 
-    private boolean isPackagesNameEmpty(CharSequence... packageNames) {
+    private static boolean isPackagesNameEmpty(CharSequence... packageNames) {
         if (packageNames.length == 0) {
             logd("package name array is empty");
             return true;
@@ -256,7 +256,7 @@ public class FreezeService extends Service {
         return false;
     }
 
-    private void logd(String msg) {
+    private static void logd(String msg) {
         if (DEBUG)
             Log.d(TAG, msg);
     }

@@ -36,6 +36,8 @@ public class AutoFreezeService extends JobService {
 
     private static final String EXTRAS_TIME = "com.bill.icewidgets.STOP_DELAY_AUTO_FREEZE";
 
+    private static final long TIME_IDLE = -1;
+
     public static void startDelayAutoFreeze(Context context, long time) {
         Intent intent = new Intent(context, AutoFreezeService.class);
         intent.setAction(ACTION_DELAY_AUTO_FREEZE);
@@ -73,8 +75,12 @@ public class AutoFreezeService extends JobService {
         Log.d(TAG, "handleStartDelayAutoFreeze: start delay time is " + time);
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         JobInfo.Builder builder = new JobInfo.Builder(DELAY_AUTO_JOB_ID++, new ComponentName(getPackageName(), AutoFreezeService.class.getName()));
-        builder.setOverrideDeadline(time);
-//        builder.setRequiresDeviceIdle(true);
+        if (time == TIME_IDLE) {
+            builder.setRequiresDeviceIdle(true);
+        } else {
+            builder.setMinimumLatency(time);
+            builder.setOverrideDeadline(time);
+        }
         int code = scheduler.schedule(builder.build());
         switch (code) {
             case JobScheduler.RESULT_SUCCESS:
@@ -93,6 +99,7 @@ public class AutoFreezeService extends JobService {
 
     @Override
     public boolean onStartJob(final JobParameters params) {
+        logd("onStartJob");
         Task.callInBackground(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
@@ -116,7 +123,7 @@ public class AutoFreezeService extends JobService {
             }
         });
 
-        return false;
+        return true;
     }
 
     @Override
