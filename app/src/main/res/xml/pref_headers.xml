@@ -3,19 +3,18 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.bill.icewidgets.ui.ActivitySettings$ThemePreferenceFragment"
+        android:fragment="com.bill.icewidgets.ui.settings.ServicePreferenceFragment"
         android:icon="@drawable/ic_function_black"
         android:summary="@string/settings_service_summary"
         android:title="@string/settings_service" />
 
     <header
-        android:fragment="com.bill.icewidgets.ui.ActivitySettings$ServicePreferenceFragment"
+        android:fragment="com.bill.icewidgets.ui.settings.ThemePreferenceFragment"
         android:icon="@drawable/ic_theme_black"
         android:summary="@string/settings_theme_summary"
         android:title="@string/settings_theme" />
 
     <header
-        android:fragment="com.bill.icewidgets.ui.ActivitySettings$AboutPreferenceFragment"
         android:icon="@drawable/ic_info_outline_black"
         android:summary="@string/app_version_name"
         android:title="@string/settings_about" />
