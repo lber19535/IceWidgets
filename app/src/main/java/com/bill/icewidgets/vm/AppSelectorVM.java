@@ -247,12 +247,4 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
         return true;
     }
 
-    public void handleSearchIntent(Intent intent) {
-        Log.d(TAG, "handleSearchIntent: ");
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //use the query to search your data somehow
-        }
-    }
-
 }

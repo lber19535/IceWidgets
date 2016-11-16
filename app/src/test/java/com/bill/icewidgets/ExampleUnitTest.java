@@ -1,4 +1,4 @@
-package com.bill.com.icewidgets;
+package com.bill.icewidgets;
 
 import org.junit.Test;
 

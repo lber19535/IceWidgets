@@ -7,6 +7,7 @@
     <string name="empty_group_tips">Please add app</string>
     <string name="default_group_name">Group Name</string>
     <string name="search_app_hint">Input app name</string>
+    <string name="search_app">Search</string>
     <string name="settings_service">Service</string>
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_summary">Freeze icon, Widgets appearance</string>

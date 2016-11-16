@@ -31,7 +31,7 @@ public class AppInfoUtils {
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        List<ResolveInfo> resolveInfos = null;
+        List<ResolveInfo> resolveInfos;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | MATCH_DISABLED_COMPONENTS);
         }else {
