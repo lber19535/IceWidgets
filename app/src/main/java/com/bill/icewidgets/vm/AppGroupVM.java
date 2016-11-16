@@ -147,10 +147,6 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
         });
     }
 
-    public void setActivityController(ActivityController controller) {
-        this.controller = controller;
-    }
-
     public void onFreezeClick(View v) {
         freezeApp();
     }
