@@ -1,6 +1,7 @@
 package com.bill.icewidgets.utils;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -34,12 +35,16 @@ public class AppInfoUtils {
         List<ResolveInfo> resolveInfos;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | MATCH_DISABLED_COMPONENTS);
-        }else {
+        } else {
             resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | GET_DISABLED_COMPONENTS);
         }
 
         for (int i = 0; i < resolveInfos.size(); i++) {
-            infos.add(resolveInfos.get(i).activityInfo.applicationInfo);
+            ActivityInfo info = resolveInfos.get(i).activityInfo;
+            // if activity is alias activity, this value is false
+            if (info.enabled) {
+                infos.add(resolveInfos.get(i).activityInfo.applicationInfo);
+            }
         }
 
         if (DEBUG) {
