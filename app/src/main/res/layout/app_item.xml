@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="@dimen/app_item_size"
+            android:layout_width="@dimen/app_item_size_normal"
             android:layout_height="@dimen/app_item_size">
 
             <ImageView
