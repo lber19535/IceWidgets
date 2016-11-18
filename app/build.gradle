@@ -50,5 +50,6 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.4.1'
     compile 'com.uphyca:stetho_realm:2.0.0'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     testCompile 'junit:junit:4.12'
 }

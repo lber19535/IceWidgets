@@ -27,6 +27,10 @@
 #优化时允许访问并修改有修饰符的类和类的成员
 -allowaccessmodification
 
+#bugly
+-keep public class com.tencent.bugly.**{*;}
+#bugly
+
 
 
 

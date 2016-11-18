@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.bill.icewidgets.components.service.ScreenService;
 import com.facebook.stetho.Stetho;
+import com.tencent.bugly.Bugly;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
@@ -20,7 +21,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // realm
         Realm.init(this);
+        // debug stetho
         if (BuildConfig.DEBUG) {
             Stetho.initialize(
                     Stetho.newInitializerBuilder(this)
@@ -29,10 +32,15 @@ public class App extends Application {
                             .build());
         }
 
+        // vector
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
+        // start screen listener service
         Intent intent = new Intent(this, ScreenService.class);
         startService(intent);
+
+        // init bugly
+        Bugly.init(getApplicationContext(), "eae17414d4", BuildConfig.DEBUG);
 
     }
 
