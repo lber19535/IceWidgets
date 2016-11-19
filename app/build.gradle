@@ -8,10 +8,11 @@ android {
         applicationId "com.bill.icewidgets"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0." + versionCode
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        renameApk(applicationId + "-" + versionName)
     }
     // This is handled for you by the 2.0+ Gradle Plugin
     aaptOptions {
@@ -52,4 +53,8 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     testCompile 'junit:junit:4.12'
+}
+
+void renameApk(fileName) {
+    setProperty("archivesBaseName", fileName)
 }

@@ -53,20 +53,27 @@ public class AutoFreezeService extends JobService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String action = intent.getAction();
-        switch (action) {
-            case ACTION_DELAY_AUTO_FREEZE: {
-                long time = intent.getLongExtra(EXTRAS_TIME, 0);
-                handleStartDelayAutoFreeze(time);
-                break;
+        /*
+        * https://developer.android.com/reference/android/app/Service.html#START_NOT_STICKY
+        * if there are not any pending start commands to be delivered
+        * to the service, it will be called with a null intent object,
+        * so you must take care to check for this
+        * */
+        if (intent != null) {
+            String action = intent.getAction();
+            switch (action) {
+                case ACTION_DELAY_AUTO_FREEZE: {
+                    long time = intent.getLongExtra(EXTRAS_TIME, 0);
+                    handleStartDelayAutoFreeze(time);
+                    break;
+                }
+                case ACTION_STOP_DELAY_AUTO_FREEZE:
+                    handleStopDelayAutoFreeze();
+                    break;
+                default:
+                    logd("onStartCommand: unknown action " + action);
             }
-            case ACTION_STOP_DELAY_AUTO_FREEZE:
-                handleStopDelayAutoFreeze();
-                break;
-            default:
-                logd("onStartCommand: unknown action " + action);
         }
-
 
         return super.onStartCommand(intent, flags, startId);
     }
