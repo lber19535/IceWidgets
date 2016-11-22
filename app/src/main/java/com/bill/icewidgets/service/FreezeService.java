@@ -1,4 +1,4 @@
-package com.bill.icewidgets.components.service;
+package com.bill.icewidgets.service;
 
 import android.app.Service;
 import android.content.Context;
@@ -19,9 +19,8 @@ public class FreezeService extends Service {
     private static final String TAG = "FreezeService";
     private static final boolean DEBUG = true;
 
-    private static final String ACTION_FREEZE_APPS = "ice.bill.com.icewidgets.action.FREEZE_APPS";
-    private static final String ACTION_UNFREEZE_APPS = "ice.bill.com.icewidgets.action.UNFREEZE_APPS";
-    private static final String ACTION_LAUNCH_APPS = "ice.bill.com.icewidgets.action.LAUNCH_APPS";
+    private static final String ACTION_FREEZE_APPS = "com.bill.icewidgets.action.FREEZE_APPS";
+    private static final String ACTION_UNFREEZE_APPS = "com.bill.icewidgets.action.UNFREEZE_APPS";
 
     private static final String EXTRA_PACKAGES = "ice.bill.com.icewidgets.extra.PACKAGES";
 
@@ -44,9 +43,6 @@ public class FreezeService extends Service {
                     break;
                 case ACTION_UNFREEZE_APPS:
                     handleUnfreezeApp(intent.getCharSequenceArrayExtra(EXTRA_PACKAGES));
-                    break;
-                case ACTION_LAUNCH_APPS:
-                    handleLaunchApp(intent.getCharSequenceExtra(EXTRA_PACKAGES));
                     break;
                 default:
                     break;
@@ -75,15 +71,10 @@ public class FreezeService extends Service {
         context.startService(intent);
     }
 
-    public static void launchApp(Context context, CharSequence packageName) {
-        Intent intent = new Intent(context, FreezeService.class);
-        intent.setAction(ACTION_LAUNCH_APPS);
-        intent.putExtra(EXTRA_PACKAGES, packageName);
-        context.startService(intent);
-    }
 
-    private void handleFreezeApp(CharSequence... packageNames) {
-        
+
+    private void handleFreezeApp(final CharSequence... packageNames) {
+
         if (RootTools.isRootAvailable()) {
             try {
                 final Shell shell = RootTools.getShell(true);
@@ -115,6 +106,7 @@ public class FreezeService extends Service {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        AppService.notifyAppFreeze(FreezeService.this,true,packageNames);
                     }
                 };
 
@@ -131,7 +123,7 @@ public class FreezeService extends Service {
         }
     }
 
-    private void handleUnfreezeApp(CharSequence... packageNames) {
+    private void handleUnfreezeApp(final CharSequence... packageNames) {
 
         if (RootTools.isRootAvailable()) {
             try {
@@ -164,11 +156,13 @@ public class FreezeService extends Service {
                     public void commandCompleted(int id, int exitcode) {
                         super.commandCompleted(id, exitcode);
                         logd("handleUnfreezeApp complete");
+
                         try {
                             RootTools.closeAllShells();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        AppService.notifyAppFreeze(FreezeService.this,false,packageNames);
                     }
                 };
 
@@ -185,68 +179,7 @@ public class FreezeService extends Service {
         }
     }
 
-    private void handleLaunchApp(final CharSequence packageName) {
-        if (RootTools.isRootAvailable()) {
-            try {
-                final Shell shell = RootTools.getShell(true);
 
-                logd("unfreeze pkname " + packageName);
-                String cmdstr = "pm enable " + packageName;
-
-                Command cmd = new Command(0, cmdstr) {
-                    @Override
-                    public void commandOutput(int id, String line) {
-                        super.commandOutput(id, line);
-                        logd("handleUnfreezeApp output " + line);
-                    }
-
-                    @Override
-                    public void commandTerminated(int id, String reason) {
-                        super.commandTerminated(id, reason);
-                        logd("handleFreezeApp terminated");
-                        try {
-                            RootTools.closeAllShells();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void commandCompleted(int id, int exitcode) {
-                        super.commandCompleted(id, exitcode);
-                        logd("handleUnfreezeApp complete");
-                        try {
-                            RootTools.closeAllShells();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        launchApp(packageName.toString());
-                    }
-                };
-
-                shell.add(cmd);
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            } catch (RootDeniedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void launchApp(String packageName) {
-        Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
-        if (intent == null) {
-            logd("package " + packageName + " can not be launched");
-            return;
-        }
-        logd("launch package " + packageName);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        startActivity(intent);
-    }
 
     private static boolean isPackagesNameEmpty(CharSequence... packageNames) {
         if (packageNames.length == 0) {

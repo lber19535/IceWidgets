@@ -1,4 +1,4 @@
-package com.bill.icewidgets.components.service;
+package com.bill.icewidgets.service;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;

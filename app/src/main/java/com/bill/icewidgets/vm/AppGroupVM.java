@@ -13,8 +13,8 @@ import android.view.View;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
-import com.bill.icewidgets.components.IceWidgets;
-import com.bill.icewidgets.components.service.FreezeService;
+import com.bill.icewidgets.IceWidgets;
+import com.bill.icewidgets.service.FreezeService;
 import com.bill.icewidgets.databinding.ActivityIceGroupBinding;
 import com.bill.icewidgets.databinding.AppItemBinding;
 import com.bill.icewidgets.db.bean.NameIdPair;

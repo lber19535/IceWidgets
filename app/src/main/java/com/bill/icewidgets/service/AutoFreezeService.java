@@ -1,4 +1,4 @@
-package com.bill.icewidgets.components.service;
+package com.bill.icewidgets.service;
 
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -31,7 +31,7 @@ public class AutoFreezeService extends JobService {
     private static final boolean DEBUG = BuildConfig.DEBUG;
     private static int DELAY_AUTO_JOB_ID = 1;
 
-    private static final String ACTION_DELAY_AUTO_FREEZE = "com.bill.icewidgets.DELAY_AUTO_FREEZE";
+    private static final String ACTION_DELAY_AUTO_FREEZE = "com.bill.icewidgets.action.DELAY_AUTO_FREEZE";
     private static final String ACTION_STOP_DELAY_AUTO_FREEZE = "com.bill.icewidgets.STOP_DELAY_AUTO_FREEZE";
 
     private static final String EXTRAS_TIME = "com.bill.icewidgets.STOP_DELAY_AUTO_FREEZE";

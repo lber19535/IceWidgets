@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
-import com.bill.icewidgets.components.IceWidgets;
+import com.bill.icewidgets.IceWidgets;
 import com.bill.icewidgets.databinding.ActivityAppSelectorBinding;
 import com.bill.icewidgets.ui.events.CloseSelectorEvent;
 import com.bill.icewidgets.vm.AppSelectorVM;

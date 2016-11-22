@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.support.v7.app.AppCompatDelegate;
 
-import com.bill.icewidgets.components.service.ScreenService;
+import com.bill.icewidgets.service.ScreenService;
 import com.facebook.stetho.Stetho;
 import com.tencent.bugly.Bugly;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;

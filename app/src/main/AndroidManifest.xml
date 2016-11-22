@@ -2,16 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bill.icewidgets">
 
-    <!--bugly permission-->
+    <!-- bugly permission -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <!--保存资源到SD卡-->
+    <!-- 保存资源到SD卡 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--bugly permission-->
 
+    <!-- bugly permission -->
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".components.IceWidgets">
+        <receiver android:name=".IceWidgets">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -45,31 +45,31 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
 
         <service
-            android:name=".components.service.FreezeService"
+            android:name=".service.FreezeService"
             android:enabled="true"
             android:exported="false" />
-
-        <service android:name=".components.service.ScreenService" />
+        <service android:name=".service.ScreenService" />
         <service
-            android:name=".components.service.AutoFreezeService"
+            android:name=".service.AutoFreezeService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
             android:name=".ui.ActivitySettings"
             android:label="@string/title_activity_settings" />
 
-        <!--bugly update dialog-->
+        <!-- bugly update dialog -->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:theme="@android:style/Theme.Translucent" />
-        <!--bugly update dialog-->
-        <!--bugly file provider for android N-->
+        <!-- bugly update dialog -->
+        <!-- bugly file provider for android N -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -79,7 +79,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <!--bugly file provider for android N-->
+        <!-- bugly file provider for android N -->
+        <service
+            android:name=".service.AppService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

@@ -1,18 +1,15 @@
 package com.bill.icewidgets.vm;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 
-import com.bill.icewidgets.App;
 import com.bill.icewidgets.BuildConfig;
-import com.bill.icewidgets.R;
-import com.bill.icewidgets.components.service.FreezeService;
 import com.bill.icewidgets.db.bean.AppItem;
+import com.bill.icewidgets.service.AppService;
 import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,7 +52,7 @@ public class AppItemVM {
             }
         });
         // launch app
-        FreezeService.launchApp(context, packageName);
+        AppService.launchApp(context, packageName);
 
         EventBus.getDefault().post(new CloseIceGroupEvent());
     }

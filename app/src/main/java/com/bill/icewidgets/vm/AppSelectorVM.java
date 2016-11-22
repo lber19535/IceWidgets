@@ -1,7 +1,5 @@
 package com.bill.icewidgets.vm;
 
-import android.app.SearchManager;
-import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
@@ -11,8 +9,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.bill.icewidgets.BuildConfig;
-import com.bill.icewidgets.components.IceWidgets;
-import com.bill.icewidgets.components.service.FreezeService;
+import com.bill.icewidgets.IceWidgets;
+import com.bill.icewidgets.service.FreezeService;
 import com.bill.icewidgets.databinding.ActivityAppSelectorBinding;
 import com.bill.icewidgets.db.bean.AppItem;
 import com.bill.icewidgets.model.AppSelectorModel;

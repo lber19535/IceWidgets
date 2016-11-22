@@ -1,4 +1,4 @@
-package com.bill.icewidgets.components;
+package com.bill.icewidgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
