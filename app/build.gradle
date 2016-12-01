@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'org.fabiomsr.drawableoptimizer'
 
 android {
     compileSdkVersion 24
@@ -34,6 +35,15 @@ android {
         enabled = true
     }
 }
+
+drawableOptimizer {
+    optimizer = 'pngquant'
+    compressionLevel = 9
+    iterations = 15
+    onlyOnRelease = false
+    logLevel = 'info'
+}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
