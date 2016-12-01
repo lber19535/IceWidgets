@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 apply plugin: 'org.fabiomsr.drawableoptimizer'
+apply plugin: 'bugly'
 
 android {
     compileSdkVersion 24
@@ -9,28 +10,52 @@ android {
         applicationId "com.bill.icewidgets"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 3
+        versionCode 5
         versionName "1.0." + versionCode
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        renameApk(applicationId + "-" + versionName)
+        renameApk("IceWidgets-" + versionName)
     }
     // This is handled for you by the 2.0+ Gradle Plugin
     aaptOptions {
         additionalParameters "--no-version-vectors"
     }
+
+    signingConfigs {
+        preview {
+            storeFile file("../keystore/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
+            resValue "string", "app_name", "IceWidgets"
             resValue "string", "app_version_name", "${defaultConfig.versionName}-release"
         }
+        preview {
+            applicationIdSuffix ".preview"
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.preview
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "IceWidgets-preview"
+            resValue "string", "app_version_name", "${defaultConfig.versionName}-preview"
+        }
         debug {
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", "IceWidgets-debug"
             resValue "string", "app_version_name", "${defaultConfig.versionName}-debug"
         }
     }
+
     dataBinding {
         enabled = true
     }
@@ -42,6 +67,11 @@ drawableOptimizer {
     iterations = 15
     onlyOnRelease = false
     logLevel = 'info'
+}
+
+bugly {
+    appId = 'eae17414d4' // 注册时分配的App ID
+    appKey = '2c398d83-1122-4c0a-8c06-c924d4524bd8' // 注册时分配的App Key
 }
 
 
