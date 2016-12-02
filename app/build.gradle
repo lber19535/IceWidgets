@@ -10,7 +10,7 @@ android {
         applicationId "com.bill.icewidgets"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 5
+        versionCode 7
         versionName "1.0." + versionCode
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -38,6 +38,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue "string", "app_name", "IceWidgets"
             resValue "string", "app_version_name", "${defaultConfig.versionName}-release"
+            buildConfigField "boolean", "PREVIEW", "false"
         }
         preview {
             applicationIdSuffix ".preview"
@@ -48,11 +49,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue "string", "app_name", "IceWidgets-preview"
             resValue "string", "app_version_name", "${defaultConfig.versionName}-preview"
+            buildConfigField "boolean", "PREVIEW", "true"
         }
         debug {
             applicationIdSuffix ".debug"
             resValue "string", "app_name", "IceWidgets-debug"
             resValue "string", "app_version_name", "${defaultConfig.versionName}-debug"
+            buildConfigField "boolean", "PREVIEW", "false"
         }
     }
 

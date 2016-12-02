@@ -51,7 +51,7 @@ public class AppService extends IntentService {
     }
 
     public static void launchApp(Context context, CharSequence packageName) {
-        Intent intent = new Intent(context, FreezeService.class);
+        Intent intent = new Intent(context, AppService.class);
         intent.setAction(ACTION_LAUNCH_APPS);
         intent.putExtra(EXTRA_PACKAGES, packageName);
         context.startService(intent);

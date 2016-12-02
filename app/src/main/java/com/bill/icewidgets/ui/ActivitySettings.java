@@ -4,17 +4,9 @@ package com.bill.icewidgets.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
 
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.ui.settings.AboutPreferenceFragment;

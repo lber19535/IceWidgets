@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 import com.bill.icewidgets.service.ScreenService;
 import com.facebook.stetho.Stetho;
 import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
@@ -40,8 +41,14 @@ public class App extends Application {
         startService(intent);
 
         // init bugly
-        Bugly.init(getApplicationContext(), "eae17414d4", BuildConfig.DEBUG);
-
+        if (BuildConfig.DEBUG) {
+            // debug do not use bugly
+        } else if (BuildConfig.PREVIEW) {
+            CrashReport.initCrashReport(getApplicationContext(), "eae17414d4", true);
+            CrashReport.setIsDevelopmentDevice(this, true);
+        } else {
+            CrashReport.initCrashReport(getApplicationContext(), "eae17414d4", false);
+        }
     }
 
 

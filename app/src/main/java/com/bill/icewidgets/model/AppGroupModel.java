@@ -40,9 +40,9 @@ public class AppGroupModel {
         for (AppItem item : appItems) {
             if (DEBUG) {
                 Log.d(TAG, "loadAppGroupInfo: item package name " + item.getPackageName());
-                Log.d(TAG, "loadAppGroupInfo: item package name " + item.getWidgetsId());
-                Log.d(TAG, "loadAppGroupInfo: item package name " + item.isFreezed());
-                Log.d(TAG, "loadAppGroupInfo: item package name " + item.getItemType());
+                Log.d(TAG, "loadAppGroupInfo: item widgets id " + item.getWidgetsId());
+                Log.d(TAG, "loadAppGroupInfo: item is freeze " + item.isFreezed());
+                Log.d(TAG, "loadAppGroupInfo: item type " + item.getItemType());
             }
 
             AppItemVM model = new AppItemVM();

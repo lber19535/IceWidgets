@@ -18,6 +18,8 @@
         android:orientation="horizontal"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
+        android:paddingRight="4dp"
+        android:paddingLeft="4dp"
         app:app_item_type="@{vm.type}">
 
         <ImageView
