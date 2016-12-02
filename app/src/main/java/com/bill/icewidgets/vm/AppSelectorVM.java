@@ -170,6 +170,7 @@ public class AppSelectorVM implements VM, OnRVItemLongClickListener, OnRVItemCli
     @Override
     public void destroy() {
         Task.cancelled();
+        realm.close();
     }
 
     @Override

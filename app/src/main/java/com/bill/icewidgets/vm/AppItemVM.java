@@ -51,6 +51,7 @@ public class AppItemVM {
                     item.setFreezed(false);
             }
         });
+        realm.close();
         // launch app
         AppService.launchApp(context, packageName);
 

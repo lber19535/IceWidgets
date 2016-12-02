@@ -1,5 +1,6 @@
 package com.bill.icewidgets.vm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -10,6 +11,7 @@ import android.support.v7.widget.GridLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
@@ -20,6 +22,7 @@ import com.bill.icewidgets.databinding.AppItemBinding;
 import com.bill.icewidgets.db.bean.NameIdPair;
 import com.bill.icewidgets.model.AppGroupManager;
 import com.bill.icewidgets.model.AppGroupModel;
+import com.bill.icewidgets.service.UpdateWidgetsService;
 import com.bill.icewidgets.ui.ActivityAppSelector;
 import com.bill.icewidgets.ui.ActivitySettings;
 import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
@@ -37,7 +40,7 @@ import io.realm.Realm;
  * Created by Bill on 2016/10/22.
  */
 
-public class AppGroupVM extends Observable.OnPropertyChangedCallback implements VM, ActivityController {
+public class AppGroupVM extends Observable.OnPropertyChangedCallback implements VM {
 
     private static final String TAG = "AppGroupVM";
     private static final boolean DEBUG = BuildConfig.DEBUG;
@@ -45,7 +48,6 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
     private ActivityIceGroupBinding iceGroupBinding;
     private AppGroupModel appGroupModel;
     private final int widgetsId;
-    private ActivityController controller;
     private List<AppItemVM> itemVMs;
 
     public final ObservableBoolean isEmpty = new ObservableBoolean();
@@ -133,6 +135,7 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
     @Override
     public void destroy() {
         groupName.removeOnPropertyChangedCallback(this);
+        realm.close();
     }
 
     @Override
@@ -166,6 +169,8 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
     }
 
     public void closeWindow(View v) {
+
+        UpdateWidgetsService.updateWidgetsName(iceGroupBinding.title.getContext(), widgetsId, iceGroupBinding.title.getText());
         EventBus.getDefault().post(new CloseIceGroupEvent());
     }
 

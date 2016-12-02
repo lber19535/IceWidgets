@@ -81,6 +81,8 @@ public class ActivityIceGroup extends AppCompatActivity {
         super.onDestroy();
         if (appGroupVM != null)
             appGroupVM.destroy();
+
+
     }
 
     private void logd(String msg) {
