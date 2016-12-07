@@ -1,14 +1,14 @@
 package com.bill.icewidgets.db;
 
-import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import io.realm.DynamicRealm;
-import io.realm.Realm;
 import io.realm.RealmMigration;
 import io.realm.RealmSchema;
 
 /**
+ * Reference https://realm.io/docs/java/latest/#migrations
+ *
  * Created by Bill on 2016/12/7.
  */
 
