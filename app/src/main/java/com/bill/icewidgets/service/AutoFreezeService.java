@@ -118,6 +118,8 @@ public class AutoFreezeService extends JobService {
                         .endGroup()
                         .findAll();
 
+                realm.close();
+
                 CharSequence[] pkgs = new CharSequence[all.size()];
                 for (int i = 0; i < all.size(); i++) {
                     pkgs[i] = all.get(i).getPackageName();

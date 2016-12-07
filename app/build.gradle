@@ -10,7 +10,7 @@ android {
         applicationId "com.bill.icewidgets"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 7
+        versionCode 9
         versionName "1.0." + versionCode
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true

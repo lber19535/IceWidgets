@@ -29,7 +29,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".IceWidgets">
+        <receiver
+            android:name=".IceWidgets"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

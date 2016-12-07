@@ -6,7 +6,7 @@
         android:title="@string/pref_service_auto_freeze" />
 
     <ListPreference
-        android:defaultValue="180"
+        android:defaultValue="@string/pref_title_auto_freeze_default_time"
         android:entries="@array/pref_auto_freeze_time_titles"
         android:entryValues="@array/pref_auto_freeze_time_values"
         android:key="@string/pref_service_auto_freeze_time_key"

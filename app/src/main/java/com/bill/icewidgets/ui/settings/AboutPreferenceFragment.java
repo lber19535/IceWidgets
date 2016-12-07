@@ -1,7 +1,9 @@
 package com.bill.icewidgets.ui.settings;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 
 import com.bill.icewidgets.R;
 import com.tencent.bugly.beta.Beta;
@@ -17,6 +19,16 @@ public class AboutPreferenceFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_about);
 
-        Beta.checkUpgrade();
+
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        String key = preference.getKey();
+
+        if (key.equals(getString(R.string.pref_about_version_key))) {
+            Beta.checkUpgrade();
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }
