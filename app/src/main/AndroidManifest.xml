@@ -29,7 +29,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".IceWidgets">
+        <receiver
+            android:name=".IceWidgets"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -56,10 +58,10 @@
             android:enabled="true"
             android:exported="false" />
         <service android:name=".service.ScreenService" />
+        <service android:name=".service.UpdateWidgetsService" />
         <service
             android:name=".service.AutoFreezeService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <activity
             android:name=".ui.ActivitySettings"
             android:label="@string/title_activity_settings" />

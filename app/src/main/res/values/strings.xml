@@ -12,11 +12,15 @@
     <string name="settings_theme_summary">Freeze icon, Widgets appearance</string>
     <string name="settings_service_summary">Auto Freeze, Manual management</string>
     <string name="settings_about">About</string>
+
+    <!-- pref service-->
     <string name="pref_service_auto_freeze">Auto freeze</string>
     <string name="pref_service_auto_freeze_key">auto_freeze</string>
     <string name="pref_service_auto_freeze_time_key">auto_freeze_delay</string>
 
-    <string name="pref_title_auto_freeze_time">Freeze delay</string>
+
+    <string name="pref_title_auto_freeze_time">Screen off freeze delay</string>
+    <string name="pref_title_auto_freeze_default_time">1000</string>
     <string-array name="pref_auto_freeze_time_titles">
         <item>Immediate</item>
         <item>1 minutes</item>
@@ -35,5 +39,25 @@
         <item>-1</item>
     </string-array>
 
- 
+    <!--pref theme-->
+    <string name="widgets_layout_key">widgets_layout</string>
+    <string name="widgets_layout_title">Change widgets layout size</string>
+    <string name="widgets_layout_summary">If the widgets size is not suitable in launcher, you can try others</string>
+    <string name="widgets_layout_def_value">Normal</string>
+    <string-array name="widgets_layout_entries">
+        <item>Normal</item>
+        <item>Middle</item>
+        <item>Large</item>
+    </string-array>
+    <string-array name="widgets_layout_values">
+        <item>Normal</item>
+        <item>Middle</item>
+        <item>Large</item>
+    </string-array>
+
+    <!--pref about-->
+    <string name="pref_about_version_title">Version</string>
+    <string name="pref_about_version_key">about_version</string>
+    <string name="pref_about_version_summary">Click to check update</string>
+
 </resources>

@@ -1,8 +1,11 @@
 package com.bill.icewidgets.service;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.IBinder;
+import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.bill.icewidgets.db.bean.AppItem;
@@ -19,7 +22,7 @@ import io.realm.Realm;
 /**
  *
  */
-public class AppService extends IntentService {
+public class AppService extends Service {
 
     private static final String TAG = "AppService";
     private static final boolean DEBUG = true;
@@ -31,7 +34,13 @@ public class AppService extends IntentService {
     private static final String EXTRA_PACKAGES = "ice.bill.com.icewidgets.extra.PACKAGES";
 
     public AppService() {
-        super("AppService");
+
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
 
@@ -58,7 +67,7 @@ public class AppService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             final String action = intent.getAction();
             switch (action) {
@@ -77,6 +86,7 @@ public class AppService extends IntentService {
 
             }
         }
+        return super.onStartCommand(intent, flags, startId);
     }
 
 
@@ -91,6 +101,7 @@ public class AppService extends IntentService {
                 }
             }
         });
+        realm.close();
     }
 
     private void handleLaunchApp(final CharSequence packageName) {

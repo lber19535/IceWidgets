@@ -42,7 +42,9 @@ public class ServicePreferenceFragment extends PreferenceFragment {
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference.getKey().equals(getString(R.string.pref_service_auto_freeze_key))) {
+        String key = preference.getKey();
+
+        if (key.equals(getString(R.string.pref_service_auto_freeze_key))) {
             SharedPreferences pref = getPreferenceManager().getSharedPreferences();
             findPreference(getString(R.string.pref_service_auto_freeze_time_key))
                     .setEnabled(pref.getBoolean(getString(R.string.pref_service_auto_freeze_key), false));

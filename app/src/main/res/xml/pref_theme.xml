@@ -1,4 +1,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ListPreference
+        android:defaultValue="@string/widgets_layout_def_value"
+        android:entries="@array/widgets_layout_entries"
+        android:entryValues="@array/widgets_layout_values"
+        android:key="@string/widgets_layout_key"
+        android:summary="@string/widgets_layout_summary"
+        android:title="@string/widgets_layout_title" />
 
 </PreferenceScreen>

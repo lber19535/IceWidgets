@@ -17,50 +17,47 @@
         android:onClick="@{vm.launchApp}"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="@dimen/app_item_size_normal"
-            android:layout_height="@dimen/app_item_size">
 
-            <ImageView
-                android:id="@+id/app_icon"
-                android:layout_width="@dimen/app_item_size"
-                android:layout_height="@dimen/app_item_size"
-                android:layout_gravity="center_horizontal"
-                android:src="@{vm.appIcon}" />
+        <ImageView
+            android:id="@+id/app_icon"
+            android:layout_width="@dimen/app_item_size"
+            android:layout_height="@dimen/app_item_size"
+            android:layout_gravity="center_horizontal"
+            android:src="@{vm.appIcon}" />
+
+
+        <LinearLayout
+            android:layout_width="@dimen/app_item_size"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="4dp"
-                android:layout_marginRight="4dp"
                 android:visibility="@{(vm.needFreeze &amp;&amp; vm.isFrozen )? View.VISIBLE : View.GONE}"
                 app:srcCompat="@drawable/ic_ac_unit_white" />
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="4dp"
-                android:layout_marginRight="4dp"
                 android:visibility="@{vm.needFreeze ? View.GONE : View.VISIBLE }"
                 app:srcCompat="@drawable/ic_ac_unit_green" />
-        </RelativeLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@{vm.appName}"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/app_name"
-            android:layout_width="@dimen/app_item_size"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@{vm.appName}"
-            android:textColor="@android:color/white"
-            android:textSize="12sp" />
     </LinearLayout>
 </layout>

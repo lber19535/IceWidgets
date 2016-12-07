@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.bill.icewidgets.db.IceWidgetsMigrations;
 import com.bill.icewidgets.service.ScreenService;
 import com.facebook.stetho.Stetho;
 import com.tencent.bugly.Bugly;
@@ -11,6 +12,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by Bill on 2016/10/22.
@@ -24,6 +26,11 @@ public class App extends Application {
 
         // realm
         Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .schemaVersion(IceWidgetsMigrations.VERSION_1)
+                .migration(new IceWidgetsMigrations())
+                .build();
+        Realm.setDefaultConfiguration(config);
         // debug stetho
         if (BuildConfig.DEBUG) {
             Stetho.initialize(
@@ -44,10 +51,10 @@ public class App extends Application {
         if (BuildConfig.DEBUG) {
             // debug do not use bugly
         } else if (BuildConfig.PREVIEW) {
-            CrashReport.initCrashReport(getApplicationContext(), "eae17414d4", true);
-            CrashReport.setIsDevelopmentDevice(this, true);
+            Bugly.init(getApplicationContext(), "eae17414d4", true);
+            Bugly.setIsDevelopmentDevice(this, true);
         } else {
-            CrashReport.initCrashReport(getApplicationContext(), "eae17414d4", false);
+            Bugly.init(getApplicationContext(), "eae17414d4", false);
         }
     }
 

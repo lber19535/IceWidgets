@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.appwidget.AppWidgetProviderInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,9 @@ import com.bill.icewidgets.R;
 import com.bill.icewidgets.db.bean.AppItem;
 import com.bill.icewidgets.db.bean.NameIdPair;
 import com.bill.icewidgets.ui.ActivityIceGroup;
+import com.tencent.bugly.crashreport.BuglyLog;
+
+import java.util.Arrays;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -75,7 +79,7 @@ public class IceWidgets extends AppWidgetProvider {
             });
 
         }
-
+        realm.close();
         System.out.println("onUpdate");
     }
 
@@ -83,15 +87,12 @@ public class IceWidgets extends AppWidgetProvider {
     public void onEnabled(Context context) {
         // Enter relevant functionality for when the first widget is created
         System.out.println("onEnabled");
-
     }
 
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
         System.out.println("disable");
-        // delete relative widgets
-        deleteGroup(AppWidgetManager.getInstance(context));
     }
 
     private void deleteGroup(AppWidgetManager widgetManager) {
@@ -128,13 +129,22 @@ public class IceWidgets extends AppWidgetProvider {
                 }
             });
         }
+        realm.close();
 
     }
 
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        System.out.println("onDeleted");
+        // delete relative widgets
+        deleteGroup(AppWidgetManager.getInstance(context));
+        System.out.println(Arrays.toString(appWidgetIds));
+    }
 
     private Realm getRealm() {
-        if (realm == null)
-            realm = Realm.getDefaultInstance();
+
+        realm = Realm.getDefaultInstance();
         return realm;
     }
 }
