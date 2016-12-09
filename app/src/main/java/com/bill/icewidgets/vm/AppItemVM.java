@@ -10,7 +10,7 @@ import android.view.View;
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.db.bean.AppItem;
 import com.bill.icewidgets.service.AppService;
-import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
+import com.bill.icewidgets.common.events.CloseIceGroupEvent;
 
 import org.greenrobot.eventbus.EventBus;
 

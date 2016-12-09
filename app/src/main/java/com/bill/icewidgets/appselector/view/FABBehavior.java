@@ -1,4 +1,4 @@
-package com.bill.icewidgets.ui;
+package com.bill.icewidgets.appselector.view;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

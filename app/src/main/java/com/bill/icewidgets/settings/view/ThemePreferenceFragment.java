@@ -1,4 +1,4 @@
-package com.bill.icewidgets.ui.settings;
+package com.bill.icewidgets.settings.view;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
-import com.bill.icewidgets.ui.settings.ServicePreferenceFragment;
+import com.bill.icewidgets.settings.view.ServicePreferenceFragment;
 
 /**
  * Created by Bill on 2016/11/14.

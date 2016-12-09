@@ -1,6 +1,7 @@
-package com.bill.icewidgets.ui.adapter;
+package com.bill.icewidgets.appselector.adapter;
 
 import android.databinding.DataBindingUtil;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -9,7 +10,7 @@ import android.widget.Filterable;
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.databinding.AppSelectorItemBinding;
-import com.bill.icewidgets.vm.AppSelectorItemVM;
+import com.bill.icewidgets.appselector.vm.AppSelectorItemVM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,11 @@ public class AppSelectorAdapter extends BaseRVAdapter<AppSelectorViewHolder> imp
     private AppNameFilter filter;
 
     public AppSelectorAdapter(List<AppSelectorItemVM> itemModels) {
-        this.vms = itemModels;
+        if (itemModels == null) {
+            this.vms = new ArrayList<>();
+        } else {
+            this.vms = itemModels;
+        }
     }
 
     @Override
@@ -48,11 +53,13 @@ public class AppSelectorAdapter extends BaseRVAdapter<AppSelectorViewHolder> imp
 
     public void replaceAll(List<AppSelectorItemVM> items) {
         this.vms = items;
-        this.mOriginalValues.clear();
+
+        if (mOriginalValues != null && !mOriginalValues.isEmpty())
+            this.mOriginalValues.clear();
     }
 
     public void showAll() {
-        if (!mOriginalValues.isEmpty())
+        if (mOriginalValues != null && !mOriginalValues.isEmpty())
             vms = mOriginalValues;
         notifyDataSetChanged();
     }
@@ -73,6 +80,11 @@ public class AppSelectorAdapter extends BaseRVAdapter<AppSelectorViewHolder> imp
     public List<AppSelectorItemVM> getItems() {
         return vms;
     }
+
+    public AppSelectorItemVM getItem(int index) {
+        return vms.get(index);
+    }
+
 
     private class AppNameFilter extends Filter {
         @Override

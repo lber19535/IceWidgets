@@ -11,7 +11,7 @@ import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.IceWidgets;
 import com.bill.icewidgets.databinding.ActivityIceGroupBinding;
-import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
+import com.bill.icewidgets.common.events.CloseIceGroupEvent;
 import com.bill.icewidgets.vm.AppGroupVM;
 
 import org.greenrobot.eventbus.EventBus;

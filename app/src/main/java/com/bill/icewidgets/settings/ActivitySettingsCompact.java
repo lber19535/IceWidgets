@@ -1,4 +1,4 @@
-package com.bill.icewidgets.ui;
+package com.bill.icewidgets.settings;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

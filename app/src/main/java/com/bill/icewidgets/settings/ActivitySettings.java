@@ -1,4 +1,4 @@
-package com.bill.icewidgets.ui;
+package com.bill.icewidgets.settings;
 
 
 import android.annotation.TargetApi;
@@ -9,9 +9,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
 import com.bill.icewidgets.R;
-import com.bill.icewidgets.ui.settings.AboutPreferenceFragment;
-import com.bill.icewidgets.ui.settings.ServicePreferenceFragment;
-import com.bill.icewidgets.ui.settings.ThemePreferenceFragment;
+import com.bill.icewidgets.settings.view.AboutPreferenceFragment;
+import com.bill.icewidgets.settings.view.ServicePreferenceFragment;
+import com.bill.icewidgets.settings.view.ThemePreferenceFragment;
 
 import java.util.List;
 

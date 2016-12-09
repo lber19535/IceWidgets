@@ -1,14 +1,13 @@
-package com.bill.icewidgets.model;
+package com.bill.icewidgets.appselector.data;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-import com.bill.icewidgets.BuildConfig;
+import com.bill.icewidgets.appselector.vm.AppSelectorItemVM;
 import com.bill.icewidgets.db.bean.AppItem;
 import com.bill.icewidgets.db.bean.NameIdPair;
 import com.bill.icewidgets.utils.AppInfoUtils;
-import com.bill.icewidgets.appselector.vm.AppSelectorItemVM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +15,20 @@ import java.util.List;
 import io.realm.Realm;
 
 /**
- * Created by Bill on 2016/10/23.
+ * Created by Bill on 2016/12/9.
  */
-public class AppSelectorModel {
-    private static final String TAG = "AppSelectorModel";
-    private static final boolean DEBUG = BuildConfig.DEBUG;
+
+public class AppRepository implements AppDataSource {
+
+    private Context context;
     private Realm realm;
 
-    public List<AppSelectorItemVM> loadApp(Context context) {
+    public AppRepository(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public List<AppSelectorItemVM> loadApp() {
         realm = Realm.getDefaultInstance();
         final PackageManager pm = context.getPackageManager();
         final List<ApplicationInfo> installedApplications = AppInfoUtils.getAppInfos(pm);
@@ -38,6 +43,7 @@ public class AppSelectorModel {
                 }
             }
         });
+        realm.close();
         return models;
     }
 

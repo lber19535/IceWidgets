@@ -1,6 +1,5 @@
 package com.bill.icewidgets.vm;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -11,7 +10,6 @@ import android.support.v7.widget.GridLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
@@ -23,9 +21,9 @@ import com.bill.icewidgets.db.bean.NameIdPair;
 import com.bill.icewidgets.model.AppGroupManager;
 import com.bill.icewidgets.model.AppGroupModel;
 import com.bill.icewidgets.service.UpdateWidgetsService;
-import com.bill.icewidgets.ui.ActivityAppSelector;
-import com.bill.icewidgets.ui.ActivitySettings;
-import com.bill.icewidgets.ui.events.CloseIceGroupEvent;
+import com.bill.icewidgets.appselector.view.ActivityAppSelector;
+import com.bill.icewidgets.settings.ActivitySettings;
+import com.bill.icewidgets.common.events.CloseIceGroupEvent;
 import com.bill.icewidgets.utils.AppStatusUtils;
 
 import org.greenrobot.eventbus.EventBus;

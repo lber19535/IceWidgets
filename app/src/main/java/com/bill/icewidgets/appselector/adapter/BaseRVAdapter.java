@@ -1,12 +1,12 @@
-package com.bill.icewidgets.ui.adapter;
+package com.bill.icewidgets.appselector.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.bill.icewidgets.BuildConfig;
-import com.bill.icewidgets.ui.listener.OnRVItemClickListener;
-import com.bill.icewidgets.ui.listener.OnRVItemLongClickListener;
+import com.bill.icewidgets.appselector.listener.OnRVItemClickListener;
+import com.bill.icewidgets.appselector.listener.OnRVItemLongClickListener;
 
 import java.util.HashMap;
 

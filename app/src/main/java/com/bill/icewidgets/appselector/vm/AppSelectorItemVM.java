@@ -1,14 +1,16 @@
-package com.bill.icewidgets.vm;
+package com.bill.icewidgets.appselector.vm;
 
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.graphics.drawable.Drawable;
 
+import com.bill.icewidgets.vm.VM;
+
 /**
  * Created by Bill on 2016/10/23.
  */
-public class AppSelectorItemVM implements VM {
+public class AppSelectorItemVM {
 
     public final ObservableField<String> label = new ObservableField<>("");
     public final ObservableField<Drawable> icon = new ObservableField<>();
@@ -18,8 +20,4 @@ public class AppSelectorItemVM implements VM {
     public final ObservableInt widgetsId = new ObservableInt();
     public final ObservableBoolean disable = new ObservableBoolean();
 
-    @Override
-    public void destroy() {
-
-    }
 }

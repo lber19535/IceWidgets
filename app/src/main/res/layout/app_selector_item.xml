@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.bill.icewidgets.vm.AppSelectorItemVM" />
+            type="com.bill.icewidgets.appselector.vm.AppSelectorItemVM" />
     </data>
 
     <LinearLayout
