@@ -53,10 +53,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".service.FreezeService"
-            android:enabled="true"
-            android:exported="false" />
         <service android:name=".service.ScreenService" />
         <service android:name=".service.UpdateWidgetsService" />
         <service

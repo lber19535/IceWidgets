@@ -126,7 +126,7 @@ public class AutoFreezeService extends JobService {
                     logd("need freeze pkg " + pkgs[i]);
                 }
 
-                FreezeService.startFreezeApps(AutoFreezeService.this, pkgs);
+                AppService.startFreezeApps(AutoFreezeService.this, pkgs);
                 jobFinished(params, false);
                 return null;
             }

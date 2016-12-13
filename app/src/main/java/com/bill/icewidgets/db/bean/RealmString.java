@@ -1,4 +1,4 @@
-package com.bill.icewidgets.model;
+package com.bill.icewidgets.db.bean;
 
 import io.realm.RealmObject;
 

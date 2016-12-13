@@ -27,7 +27,7 @@ public class App extends Application {
         // realm
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
-                .schemaVersion(IceWidgetsMigrations.VERSION_1)
+                .schemaVersion(IceWidgetsMigrations.VERSION_2)
                 .migration(new IceWidgetsMigrations())
                 .build();
         Realm.setDefaultConfiguration(config);

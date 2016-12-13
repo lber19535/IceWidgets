@@ -1,7 +1,5 @@
 package com.bill.icewidgets.db.bean;
 
-import com.bill.icewidgets.model.RealmString;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 

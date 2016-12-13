@@ -23,9 +23,7 @@ public class ScreenService extends Service {
     private static final String TAG = "ScreenService";
     private static final boolean DEBUG = BuildConfig.DEBUG;
 
-
     private ScreenBroadcastReceiver receiver = new ScreenBroadcastReceiver();
-
 
     @Nullable
     @Override

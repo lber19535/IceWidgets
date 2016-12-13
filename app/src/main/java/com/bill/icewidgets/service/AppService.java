@@ -1,14 +1,13 @@
 package com.bill.icewidgets.service;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.bill.icewidgets.db.bean.AppItem;
+import com.bill.icewidgets.service.tools.CallbackCommand;
 import com.stericson.RootShell.exceptions.RootDeniedException;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootShell.execution.Shell;
@@ -20,21 +19,23 @@ import java.util.concurrent.TimeoutException;
 import io.realm.Realm;
 
 /**
- *
+ * Created by Bill on 2016/11/14.
  */
-public class AppService extends Service {
+public class AppService extends CountDownService {
 
     private static final String TAG = "AppService";
     private static final boolean DEBUG = true;
 
     private static final String ACTION_NOTIFY_FREEZE = "com.bill.icewidgets.service.action.NOTIFY_FREEZE";
     private static final String ACTION_LAUNCH_APPS = "com.bill.icewidgets.action.LAUNCH_APPS";
+    private static final String ACTION_FREEZE_APPS = "com.bill.icewidgets.action.FREEZE_APPS";
+    private static final String ACTION_UNFREEZE_APPS = "com.bill.icewidgets.action.UNFREEZE_APPS";
 
     private static final String EXTRA_IS_FREEZE = "com.bill.icewidgets.service.extra.IS_FREEZE";
     private static final String EXTRA_PACKAGES = "ice.bill.com.icewidgets.extra.PACKAGES";
 
     public AppService() {
-
+        super(TAG);
     }
 
     @Nullable
@@ -66,8 +67,28 @@ public class AppService extends Service {
         context.startService(intent);
     }
 
+    public static void startFreezeApps(Context context, CharSequence... packageNames) {
+        if (isPackagesNameEmpty(packageNames)) {
+            return;
+        }
+        Intent intent = new Intent(context, AppService.class);
+        intent.setAction(ACTION_FREEZE_APPS);
+        intent.putExtra(EXTRA_PACKAGES, packageNames);
+        context.startService(intent);
+    }
+
+    public static void startUnfreezeApps(Context context, CharSequence... packageNames) {
+        if (isPackagesNameEmpty(packageNames)) {
+            return;
+        }
+        Intent intent = new Intent(context, AppService.class);
+        intent.setAction(ACTION_UNFREEZE_APPS);
+        intent.putExtra(EXTRA_PACKAGES, packageNames);
+        context.startService(intent);
+    }
+
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
             switch (action) {
@@ -80,13 +101,18 @@ public class AppService extends Service {
                 case ACTION_LAUNCH_APPS:
                     handleLaunchApp(intent.getCharSequenceExtra(EXTRA_PACKAGES));
                     break;
+                case ACTION_FREEZE_APPS:
+                    handleFreezeApp(intent.getCharSequenceArrayExtra(EXTRA_PACKAGES));
+                    break;
+                case ACTION_UNFREEZE_APPS:
+                    handleUnfreezeApp(intent.getCharSequenceArrayExtra(EXTRA_PACKAGES));
+                    break;
                 default:
                     logd(action + " is not defined");
                     break;
 
             }
         }
-        return super.onStartCommand(intent, flags, startId);
     }
 
 
@@ -112,28 +138,9 @@ public class AppService extends Service {
                 logd("unfreeze pkname " + packageName);
                 String cmdstr = "pm enable " + packageName;
 
-                Command cmd = new Command(0, cmdstr) {
+                Command cmd = new CallbackCommand(0, new CallbackCommand.Callback() {
                     @Override
-                    public void commandOutput(int id, String line) {
-                        super.commandOutput(id, line);
-                        logd("handleUnfreezeApp output " + line);
-                    }
-
-                    @Override
-                    public void commandTerminated(int id, String reason) {
-                        super.commandTerminated(id, reason);
-                        logd("handleFreezeApp terminated");
-                        try {
-                            RootTools.closeAllShells();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void commandCompleted(int id, int exitcode) {
-                        super.commandCompleted(id, exitcode);
-                        logd("handleUnfreezeApp complete");
+                    public void onCallback(String line) {
                         try {
                             RootTools.closeAllShells();
                         } catch (IOException e) {
@@ -141,10 +148,9 @@ public class AppService extends Service {
                         }
                         launchApp(packageName.toString());
                     }
-                };
+                },cmdstr);
 
                 shell.add(cmd);
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -168,6 +174,87 @@ public class AppService extends Service {
         logd("launch package " + packageName);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         startActivity(intent);
+    }
+
+    private void handleFreezeApp(final CharSequence... packageNames) {
+
+        if (RootTools.isRootAvailable()) {
+            try {
+                final Shell shell = RootTools.getShell(true);
+                String[] cmds = new String[packageNames.length];
+
+                for (int i = 0; i < packageNames.length; i++) {
+                    logd("add freeze cmd for " + packageNames[i]);
+                    cmds[i] = "pm disable " + packageNames[i];
+                }
+
+                Command cmd = new CallbackCommand(0, new CallbackCommand.Callback() {
+                    @Override
+                    public void onCallback(String line) {
+                        try {
+                            RootTools.closeAllShells();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        AppService.notifyAppFreeze(AppService.this, true, packageNames);
+                    }
+                },cmds);
+
+                shell.add(cmd);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            } catch (RootDeniedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void handleUnfreezeApp(final CharSequence... packageNames) {
+
+        if (RootTools.isRootAvailable()) {
+            try {
+                final Shell shell = RootTools.getShell(true);
+                String[] cmds = new String[packageNames.length];
+
+                for (int i = 0; i < packageNames.length; i++) {
+                    logd("unfreeze pkname " + packageNames[i]);
+                    cmds[i] = "pm enable " + packageNames[i];
+                }
+
+                Command cmd = new CallbackCommand(0, new CallbackCommand.Callback() {
+                    @Override
+                    public void onCallback(String line) {
+                        try {
+                            RootTools.closeAllShells();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        AppService.notifyAppFreeze(AppService.this, false, packageNames);
+                    }
+                }, cmds);
+
+                shell.add(cmd);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            } catch (RootDeniedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private static boolean isPackagesNameEmpty(CharSequence... packageNames) {
+        if (packageNames.length == 0) {
+            logd("package name array is empty");
+            return true;
+        }
+        return false;
     }
 
     private static void logd(String msg) {

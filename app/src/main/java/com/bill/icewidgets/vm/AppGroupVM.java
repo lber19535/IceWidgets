@@ -12,18 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.bill.icewidgets.BuildConfig;
-import com.bill.icewidgets.R;
 import com.bill.icewidgets.IceWidgets;
-import com.bill.icewidgets.service.FreezeService;
+import com.bill.icewidgets.R;
+import com.bill.icewidgets.appselector.view.ActivityAppSelector;
+import com.bill.icewidgets.common.events.CloseIceGroupEvent;
 import com.bill.icewidgets.databinding.ActivityIceGroupBinding;
 import com.bill.icewidgets.databinding.AppItemBinding;
 import com.bill.icewidgets.db.bean.NameIdPair;
 import com.bill.icewidgets.model.AppGroupManager;
 import com.bill.icewidgets.model.AppGroupModel;
+import com.bill.icewidgets.service.AppService;
 import com.bill.icewidgets.service.UpdateWidgetsService;
-import com.bill.icewidgets.appselector.view.ActivityAppSelector;
 import com.bill.icewidgets.settings.ActivitySettings;
-import com.bill.icewidgets.common.events.CloseIceGroupEvent;
 import com.bill.icewidgets.utils.AppStatusUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -161,7 +161,7 @@ public class AppGroupVM extends Observable.OnPropertyChangedCallback implements 
                 pkgs.add(vm.getPackageName());
             }
         }
-        FreezeService.startFreezeApps(iceGroupBinding.getRoot().getContext(), pkgs.toArray(new CharSequence[pkgs.size()]));
+        AppService.startFreezeApps(iceGroupBinding.getRoot().getContext(), pkgs.toArray(new CharSequence[pkgs.size()]));
 
         closeWindow(null);
     }

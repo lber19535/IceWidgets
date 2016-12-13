@@ -5,11 +5,10 @@ import android.view.View;
 import com.bill.icewidgets.IceWidgets;
 import com.bill.icewidgets.appselector.AppSelectorContract;
 import com.bill.icewidgets.appselector.data.AppDataSource;
-import com.bill.icewidgets.appselector.data.AppRepository;
 import com.bill.icewidgets.appselector.vm.AppSelectorItemVM;
 import com.bill.icewidgets.common.events.CloseSelectorEvent;
 import com.bill.icewidgets.db.bean.AppItem;
-import com.bill.icewidgets.service.FreezeService;
+import com.bill.icewidgets.service.AppService;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -130,7 +129,7 @@ public class AppSelectorPresenter implements AppSelectorContract.Presenter {
                 }
             });
 
-            FreezeService.startFreezeApps(v.getContext(), pkgNames.toArray(new CharSequence[pkgNames.size()]));
+            AppService.startFreezeApps(v.getContext(), pkgNames.toArray(new CharSequence[pkgNames.size()]));
         }
 
         if (!unfreezeItemsVms.isEmpty()) {
@@ -152,7 +151,7 @@ public class AppSelectorPresenter implements AppSelectorContract.Presenter {
                 }
             });
             if (!pkgNames.isEmpty()) {
-                FreezeService.startUnfreezeApps(v.getContext(), pkgNames.toArray(new CharSequence[pkgNames.size()]));
+                AppService.startUnfreezeApps(v.getContext(), pkgNames.toArray(new CharSequence[pkgNames.size()]));
             }
         }
 
