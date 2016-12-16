@@ -5,8 +5,12 @@
     <data>
 
         <variable
+            name="presenter"
+            type="com.bill.icewidgets.appselector.AppSelectorContract.Presenter"/>
+
+        <variable
             name="vm"
-            type="com.bill.icewidgets.vm.AppSelectorVM" />
+            type="com.bill.icewidgets.appselector.vm.AppSelectorVM" />
     </data>
 
     <RelativeLayout
@@ -44,11 +48,11 @@
                 android:layout_margin="32dp"
                 android:background="@color/colorPrimary"
                 android:clickable="true"
-                android:onClick="@{vm.onFabClick}"
+                android:onClick="@{presenter::postSaveFreeze}"
                 app:elevation="0dp"
                 app:layout_anchor="@id/all_list"
                 app:layout_anchorGravity="bottom|right|end"
-                app:layout_behavior="com.bill.icewidgets.ui.FABBehavior"
+                app:layout_behavior="com.bill.icewidgets.appselector.view.FABBehavior"
                 app:srcCompat="@drawable/ic_ac_unit_white" />
 
         </android.support.design.widget.CoordinatorLayout>

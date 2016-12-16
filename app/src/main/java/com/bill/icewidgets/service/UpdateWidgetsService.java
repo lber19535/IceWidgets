@@ -14,8 +14,8 @@ import android.widget.RemoteViews;
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.db.bean.AppIcon;
 import com.bill.icewidgets.db.bean.NameIdPair;
-import com.bill.icewidgets.ui.ActivityIceGroup;
-import com.bill.icewidgets.ui.settings.ThemePreferenceFragment;
+import com.bill.icewidgets.groupdialog.view.ActivityIceGroup;
+import com.bill.icewidgets.settings.view.ThemePreferenceFragment;
 
 import io.realm.Realm;
 import io.realm.RealmResults;

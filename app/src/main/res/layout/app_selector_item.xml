@@ -4,11 +4,9 @@
 
     <data>
 
-        <import type="com.bill.icewidgets.utils.AppItemTypeConverter" />
-
         <variable
             name="vm"
-            type="com.bill.icewidgets.vm.AppSelectorItemVM" />
+            type="com.bill.icewidgets.appselector.vm.AppSelectorItemVM" />
     </data>
 
     <LinearLayout
@@ -17,9 +15,9 @@
 
         android:orientation="horizontal"
         android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:paddingRight="4dp"
         android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:paddingTop="4dp"
         app:app_item_type="@{vm.type}">
 
         <ImageView

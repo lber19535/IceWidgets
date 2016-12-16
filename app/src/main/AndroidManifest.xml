@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.ActivityIceGroup"
+            android:name=".groupdialog.view.ActivityIceGroup"
             android:theme="@style/Theme.Dialog.NoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,7 @@
         </receiver>
 
         <activity
-            android:name=".ui.ActivityAppSelector"
+            android:name=".appselector.view.ActivityAppSelector"
             android:launchMode="singleTop">
             <meta-data
                 android:name="android.app.searchable"
@@ -53,17 +53,13 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".service.FreezeService"
-            android:enabled="true"
-            android:exported="false" />
         <service android:name=".service.ScreenService" />
         <service android:name=".service.UpdateWidgetsService" />
         <service
             android:name=".service.AutoFreezeService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <activity
-            android:name=".ui.ActivitySettings"
+            android:name=".settings.ActivitySettings"
             android:label="@string/title_activity_settings" />
 
         <!-- bugly update dialog -->

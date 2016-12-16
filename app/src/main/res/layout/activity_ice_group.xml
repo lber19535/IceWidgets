@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.bill.icewidgets.vm.AppGroupVM" />
+            type="com.bill.icewidgets.groupdialog.vm.AppGroupVM" />
 
         <import type="android.view.View" />
     </data>
@@ -38,9 +38,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:background="@android:color/transparent"
+                android:cursorVisible="false"
                 android:gravity="center"
                 android:hint="@string/default_group_name"
-                android:cursorVisible="false"
                 android:inputType="textNoSuggestions"
                 android:maxLines="1"
                 android:text="@={vm.groupName}"
@@ -62,7 +62,7 @@
             android:layout_width="@dimen/app_item_group_width"
             android:layout_height="@dimen/app_item_group_height"
             android:layout_margin="8dp"
-            android:onClick="@{vm.closeWindow}"
+            android:onClick="@{vm::closeWindow}"
             android:visibility="@{vm.isEmpty ? View.VISIBLE : View.GONE}">
 
             <android.support.v7.widget.AppCompatTextView
@@ -100,7 +100,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/freeze_circle_bg"
-                android:onClick="@{vm.onFreezeClick}"
+                android:onClick="@{vm::onFreezeClick}"
                 app:srcCompat="@drawable/ic_ac_unit_white" />
 
         </RelativeLayout>

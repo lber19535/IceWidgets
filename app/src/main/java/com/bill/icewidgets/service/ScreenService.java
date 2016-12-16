@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
-import com.bill.icewidgets.ui.settings.ServicePreferenceFragment;
+import com.bill.icewidgets.settings.view.ServicePreferenceFragment;
 
 /**
  * Created by Bill on 2016/11/14.
@@ -23,9 +23,7 @@ public class ScreenService extends Service {
     private static final String TAG = "ScreenService";
     private static final boolean DEBUG = BuildConfig.DEBUG;
 
-
     private ScreenBroadcastReceiver receiver = new ScreenBroadcastReceiver();
-
 
     @Nullable
     @Override

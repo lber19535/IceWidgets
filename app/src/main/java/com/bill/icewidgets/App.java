@@ -8,7 +8,6 @@ import com.bill.icewidgets.db.IceWidgetsMigrations;
 import com.bill.icewidgets.service.ScreenService;
 import com.facebook.stetho.Stetho;
 import com.tencent.bugly.Bugly;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
@@ -27,7 +26,7 @@ public class App extends Application {
         // realm
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
-                .schemaVersion(IceWidgetsMigrations.VERSION_1)
+                .schemaVersion(IceWidgetsMigrations.VERSION_2)
                 .migration(new IceWidgetsMigrations())
                 .build();
         Realm.setDefaultConfiguration(config);
