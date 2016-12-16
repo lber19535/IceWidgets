@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by Bill on 2016/11/14.
@@ -30,9 +31,14 @@ public class AppService extends CountDownService {
     private static final String ACTION_LAUNCH_APPS = "com.bill.icewidgets.action.LAUNCH_APPS";
     private static final String ACTION_FREEZE_APPS = "com.bill.icewidgets.action.FREEZE_APPS";
     private static final String ACTION_UNFREEZE_APPS = "com.bill.icewidgets.action.UNFREEZE_APPS";
+    private static final String ACTION_FREEZE_GROUP = "com.bill.icewidgets.action.FREEZE_GROUP";
 
     private static final String EXTRA_IS_FREEZE = "com.bill.icewidgets.service.extra.IS_FREEZE";
-    private static final String EXTRA_PACKAGES = "ice.bill.com.icewidgets.extra.PACKAGES";
+    private static final String EXTRA_PACKAGES = "com.bill.com.icewidgets.extra.PACKAGES";
+    private static final String EXTRA_WIDGETS_ID = "com.bill.com.icewidgets.extra.WIDGETS_ID";
+
+
+    private static final int INVALID_WIDGETS_ID = -1;
 
     public AppService() {
         super(TAG);
@@ -64,6 +70,13 @@ public class AppService extends CountDownService {
         Intent intent = new Intent(context, AppService.class);
         intent.setAction(ACTION_LAUNCH_APPS);
         intent.putExtra(EXTRA_PACKAGES, packageName);
+        context.startService(intent);
+    }
+
+    public static void freezeGroup(Context context, int widgetsId) {
+        Intent intent = new Intent(context, AppService.class);
+        intent.setAction(ACTION_FREEZE_GROUP);
+        intent.putExtra(EXTRA_WIDGETS_ID, widgetsId);
         context.startService(intent);
     }
 
@@ -107,12 +120,43 @@ public class AppService extends CountDownService {
                 case ACTION_UNFREEZE_APPS:
                     handleUnfreezeApp(intent.getCharSequenceArrayExtra(EXTRA_PACKAGES));
                     break;
+                case ACTION_FREEZE_GROUP:
+                    handleFreezeGroup(intent.getIntExtra(EXTRA_WIDGETS_ID, INVALID_WIDGETS_ID));
                 default:
                     logd(action + " is not defined");
                     break;
 
             }
         }
+    }
+
+    private void handleFreezeGroup(int widgetsId) {
+        if (widgetsId == INVALID_WIDGETS_ID) {
+            logd("handleFreezeGroup INVALID_WIDGETS_ID");
+            return;
+        }
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<AppItem> items = realm.where(AppItem.class).beginGroup()
+                .equalTo("widgetsId", widgetsId)
+                .equalTo("isFreezed", false)
+                .equalTo("", AppItem.ITEM_TYPE_ADD | AppItem.ITEM_TYPE_FREEZE)
+                .endGroup().findAll();
+
+        realm.close();
+
+        int size = items.size();
+        String[] pkgs = new String[size];
+        for (int i = 0; i < size; i++) {
+            pkgs[i] = items.get(i).getPackageName();
+            if (DEBUG){
+                logd("handleFreezeGroup package name " + pkgs[i]);
+            }
+        }
+        logd("handleFreezeGroup size is " + size);
+
+        handleFreezeApp(pkgs);
+        handleNotifyFreeze(true,pkgs);
+
     }
 
 
@@ -148,7 +192,7 @@ public class AppService extends CountDownService {
                         }
                         launchApp(packageName.toString());
                     }
-                },cmdstr);
+                }, cmdstr);
 
                 shell.add(cmd);
 
@@ -198,7 +242,7 @@ public class AppService extends CountDownService {
                         }
                         AppService.notifyAppFreeze(AppService.this, true, packageNames);
                     }
-                },cmds);
+                }, cmds);
 
                 shell.add(cmd);
 

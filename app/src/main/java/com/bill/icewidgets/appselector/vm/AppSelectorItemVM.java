@@ -5,8 +5,6 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.graphics.drawable.Drawable;
 
-import com.bill.icewidgets.vm.VM;
-
 /**
  * Created by Bill on 2016/10/23.
  */

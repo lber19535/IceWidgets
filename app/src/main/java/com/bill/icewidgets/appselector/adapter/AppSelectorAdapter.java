@@ -1,7 +1,6 @@
 package com.bill.icewidgets.appselector.adapter;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -9,8 +8,8 @@ import android.widget.Filterable;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.R;
-import com.bill.icewidgets.databinding.AppSelectorItemBinding;
 import com.bill.icewidgets.appselector.vm.AppSelectorItemVM;
+import com.bill.icewidgets.databinding.AppSelectorItemBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +55,7 @@ public class AppSelectorAdapter extends BaseRVAdapter<AppSelectorViewHolder> imp
 
         if (mOriginalValues != null && !mOriginalValues.isEmpty())
             this.mOriginalValues.clear();
+        notifyDataSetChanged();
     }
 
     public void showAll() {

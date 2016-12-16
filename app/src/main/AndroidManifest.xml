@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.ActivityIceGroup"
+            android:name=".groupdialog.view.ActivityIceGroup"
             android:theme="@style/Theme.Dialog.NoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

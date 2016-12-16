@@ -1,4 +1,4 @@
-package com.bill.icewidgets.vm;
+package com.bill.icewidgets.groupdialog.vm;
 
 import android.content.Context;
 import android.databinding.ObservableBoolean;
@@ -8,9 +8,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.bill.icewidgets.BuildConfig;
+import com.bill.icewidgets.common.events.CloseIceGroupEvent;
 import com.bill.icewidgets.db.bean.AppItem;
 import com.bill.icewidgets.service.AppService;
-import com.bill.icewidgets.common.events.CloseIceGroupEvent;
 
 import org.greenrobot.eventbus.EventBus;
 

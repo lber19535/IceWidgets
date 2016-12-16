@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.SwitchPreference;
 
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.service.UpdateWidgetsService;

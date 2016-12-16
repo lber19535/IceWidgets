@@ -8,7 +8,6 @@ import com.bill.icewidgets.db.IceWidgetsMigrations;
 import com.bill.icewidgets.service.ScreenService;
 import com.facebook.stetho.Stetho;
 import com.tencent.bugly.Bugly;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;

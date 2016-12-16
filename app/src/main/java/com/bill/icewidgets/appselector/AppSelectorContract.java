@@ -1,7 +1,5 @@
 package com.bill.icewidgets.appselector;
 
-import android.view.View;
-
 import com.bill.icewidgets.BasePresenter;
 import com.bill.icewidgets.BaseView;
 import com.bill.icewidgets.appselector.vm.AppSelectorItemVM;

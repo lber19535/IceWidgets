@@ -1,6 +1,5 @@
 package com.bill.icewidgets.db;
 
-import com.bill.icewidgets.db.bean.RealmString;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import io.realm.DynamicRealm;
@@ -34,7 +33,7 @@ public class IceWidgetsMigrations implements RealmMigration {
      * {@link com.bill.icewidgets.db.bean.NameIdPair} <p>
      * {@link com.bill.icewidgets.db.bean.RealmString} <p>
      */
-    public static final long VERSION_2 = 2;
+    public static final long VERSION_2 = 1;
 
 
     @Override
@@ -43,13 +42,18 @@ public class IceWidgetsMigrations implements RealmMigration {
 
         // move RealmString to db package
         if (oldVersion == 1) {
-            schema.remove("RealmString");
-            schema.create("RealmString").addField("val", String.class);
+//            schema.remove("com.bill.icewidgets.model.RealmString");
+            schema.create("RealmString")
+                    .addField("val", String.class);
+
+            schema.create("AppIcon")
+                    .addField("widgetsId",Integer.class)
+                    .addField("iconType",Integer.class);
             oldVersion++;
         }
 
         if (oldVersion == 2) {
-
+            oldVersion++;
         }
 
         if (oldVersion != newVersion) {

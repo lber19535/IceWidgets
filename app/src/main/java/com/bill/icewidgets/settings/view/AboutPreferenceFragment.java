@@ -7,7 +7,6 @@ import android.preference.PreferenceScreen;
 
 import com.bill.icewidgets.R;
 import com.tencent.bugly.beta.Beta;
-import com.tencent.bugly.beta.UpgradeInfo;
 
 /**
  * Created by Bill on 2016/11/14.

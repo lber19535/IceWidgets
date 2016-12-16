@@ -48,7 +48,7 @@
                 android:layout_margin="32dp"
                 android:background="@color/colorPrimary"
                 android:clickable="true"
-                android:onClick="@{presenter.postSaveFreeze}"
+                android:onClick="@{presenter::postSaveFreeze}"
                 app:elevation="0dp"
                 app:layout_anchor="@id/all_list"
                 app:layout_anchorGravity="bottom|right|end"

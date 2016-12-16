@@ -102,6 +102,7 @@ public class AutoFreezeService extends JobService {
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         scheduler.cancelAll();
         logd("handleStopDelayAutoFreeze: job canceled");
+        stopSelf();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.bill.icewidgets.utils;
+package com.bill.icewidgets.utils.bind;
 
 import android.databinding.BindingConversion;
 import android.graphics.drawable.ColorDrawable;
