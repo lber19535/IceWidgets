@@ -11,16 +11,16 @@ import io.realm.annotations.PrimaryKey;
 public class AppItem extends RealmObject {
 
     /**
-     * add + !disable
-     * add + disable
-     * !add + !disable
+     * add + !disable   0001
+     * add + disable    0011
+     * !add + !disable   0000
      */
     @Ignore
-    public static final int ITEM_TYPE_ADD = 1 << 0;
+    public static final int ITEM_TYPE_ADD = 1 << 0;          // 0001
     @Ignore
-    public static final int ITEM_TYPE_FREEZE = 1 << 1;
+    public static final int ITEM_TYPE_FREEZE = 1 << 1;     // 0010
     @Ignore
-    public static final int ITEM_TYPE_NONE = 0;
+    public static final int ITEM_TYPE_NONE = 0;             // 0000
 
     @Index
     @PrimaryKey

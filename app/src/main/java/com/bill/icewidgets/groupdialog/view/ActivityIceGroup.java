@@ -143,7 +143,7 @@ public class ActivityIceGroup extends AppCompatActivity implements GroupContract
                 params.setMargins(padding, padding, padding, padding);
             }
             binding.getRoot().setLayoutParams(params);
-            AppItemVM itemVM = AppItemConverter.item2VM(getPackageManager(), items.get(i));
+            AppItemVM itemVM = AppItemConverter.item2VM(getPackageManager(), items.get(i - 1));
             binding.setVm(itemVM);
 
             iceGroupBinding.appContainer.addView(binding.getRoot());

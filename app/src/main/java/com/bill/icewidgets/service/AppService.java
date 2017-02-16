@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bill.icewidgets.db.bean.AppItem;
 import com.bill.icewidgets.service.tools.CallbackCommand;
@@ -29,8 +30,8 @@ public class AppService extends CountDownService {
 
     private static final String ACTION_NOTIFY_FREEZE = "com.bill.icewidgets.service.action.NOTIFY_FREEZE";
     private static final String ACTION_LAUNCH_APPS = "com.bill.icewidgets.action.LAUNCH_APPS";
-    private static final String ACTION_FREEZE_APPS = "com.bill.icewidgets.action.FREEZE_APPS";
-    private static final String ACTION_UNFREEZE_APPS = "com.bill.icewidgets.action.UNFREEZE_APPS";
+    public static final String ACTION_FREEZE_APPS = "com.bill.icewidgets.action.FREEZE_APPS";
+    public static final String ACTION_UNFREEZE_APPS = "com.bill.icewidgets.action.UNFREEZE_APPS";
     private static final String ACTION_FREEZE_GROUP = "com.bill.icewidgets.action.FREEZE_GROUP";
 
     private static final String EXTRA_IS_FREEZE = "com.bill.icewidgets.service.extra.IS_FREEZE";
@@ -66,6 +67,12 @@ public class AppService extends CountDownService {
         context.startService(intent);
     }
 
+    /**
+     * This method will auto unfreeze and launch the app
+     *
+     * @param context
+     * @param packageName
+     */
     public static void launchApp(Context context, CharSequence packageName) {
         Intent intent = new Intent(context, AppService.class);
         intent.setAction(ACTION_LAUNCH_APPS);
@@ -73,6 +80,13 @@ public class AppService extends CountDownService {
         context.startService(intent);
     }
 
+
+    /**
+     * Freeze the app in widgetsId
+     *
+     * @param context
+     * @param widgetsId
+     */
     public static void freezeGroup(Context context, int widgetsId) {
         Intent intent = new Intent(context, AppService.class);
         intent.setAction(ACTION_FREEZE_GROUP);
@@ -80,6 +94,17 @@ public class AppService extends CountDownService {
         context.startService(intent);
     }
 
+    /**
+     * Start to freeze the apps.
+     * <p>
+     * This service will send broadcast when freeze action is finish,
+     * you can use IntentFilter(ACTION_FREEZE_APPS) to receive it.
+     * the Extra name EXTRA_PACKAGES contains an app's package
+     * names.
+     *
+     * @param context
+     * @param packageNames
+     */
     public static void startFreezeApps(Context context, CharSequence... packageNames) {
         if (isPackagesNameEmpty(packageNames)) {
             return;
@@ -90,6 +115,17 @@ public class AppService extends CountDownService {
         context.startService(intent);
     }
 
+    /**
+     * Start to unfreeze the apps.
+     * <p>
+     * This service will send broadcast when unfreeze action is finish,
+     * you can use IntentFilter(ACTION_UNFREEZE_APPS) to receive it,
+     * the Extra name is EXTRA_PACKAGES contains an app's package
+     * names.
+     *
+     * @param context
+     * @param packageNames
+     */
     public static void startUnfreezeApps(Context context, CharSequence... packageNames) {
         if (isPackagesNameEmpty(packageNames)) {
             return;
@@ -148,14 +184,14 @@ public class AppService extends CountDownService {
         String[] pkgs = new String[size];
         for (int i = 0; i < size; i++) {
             pkgs[i] = items.get(i).getPackageName();
-            if (DEBUG){
+            if (DEBUG) {
                 logd("handleFreezeGroup package name " + pkgs[i]);
             }
         }
         logd("handleFreezeGroup size is " + size);
 
         handleFreezeApp(pkgs);
-        handleNotifyFreeze(true,pkgs);
+        handleNotifyFreeze(true, pkgs);
 
     }
 
@@ -167,11 +203,27 @@ public class AppService extends CountDownService {
             public void execute(Realm realm) {
                 for (CharSequence name : packageNames) {
                     AppItem item = realm.where(AppItem.class).equalTo("packageName", name.toString()).findFirst();
-                    item.setFreezed(isFreeze);
+                    if (item != null)
+                        item.setFreezed(isFreeze);
                 }
             }
         });
         realm.close();
+
+
+        handleNotifyFreezeBroadcast(isFreeze, packageNames);
+    }
+
+    private void handleNotifyFreezeBroadcast(final boolean isFreeze, final CharSequence... packageNames) {
+        Intent intent = new Intent();
+        if (isFreeze) {
+            intent.setAction(ACTION_FREEZE_APPS);
+            intent.putExtra(EXTRA_PACKAGES, packageNames);
+        } else {
+            intent.setAction(ACTION_UNFREEZE_APPS);
+            intent.putExtra(EXTRA_PACKAGES, packageNames);
+        }
+        sendBroadcast(intent);
     }
 
     private void handleLaunchApp(final CharSequence packageName) {
@@ -202,6 +254,7 @@ public class AppService extends CountDownService {
                 e.printStackTrace();
             } catch (RootDeniedException e) {
                 e.printStackTrace();
+                toastRootPermissionDenied();
             }
         }
     }
@@ -252,6 +305,7 @@ public class AppService extends CountDownService {
                 e.printStackTrace();
             } catch (RootDeniedException e) {
                 e.printStackTrace();
+                toastRootPermissionDenied();
             }
         }
     }
@@ -288,8 +342,14 @@ public class AppService extends CountDownService {
                 e.printStackTrace();
             } catch (RootDeniedException e) {
                 e.printStackTrace();
+                toastRootPermissionDenied();
             }
         }
+    }
+
+
+    private void toastRootPermissionDenied() {
+        Toast.makeText(this, "Root Permission Denied", Toast.LENGTH_LONG);
     }
 
 
