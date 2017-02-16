@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.core.deps.guava.collect.ObjectArrays;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -27,19 +26,18 @@ import static org.junit.Assert.assertTrue;
 @SmallTest
 public class AppServiceTest {
 
-    private boolean freeze = false;
+    private boolean received = false;
     private Object lock = new Object();
 
     @Test
-    public void testFunc() throws Exception {
+    public void testFreeze() throws Exception {
         Context ctx = InstrumentationRegistry.getTargetContext();
-
+        received = false;
         final BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                intent.getAction().equals(AppService.ACTION_FREEZE_APPS);
-                freeze = true;
-                assertEquals(true, freeze);
+                received = true;
+                assertEquals(true, received);
                 synchronized (lock) {
                     lock.notify();
                 }
@@ -53,11 +51,36 @@ public class AppServiceTest {
             lock.wait(10000);
         }
 
-        if (!freeze) {
-            assertTrue(freeze);
+        if (!received) {
+            assertTrue(received);
+        }
+    }
+
+    @Test
+    public void testUnfreeze() throws Exception {
+        Context ctx = InstrumentationRegistry.getTargetContext();
+        received = false;
+        final BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                received = true;
+                assertEquals(true, received);
+                synchronized (lock) {
+                    lock.notify();
+                }
+            }
+        };
+        ctx.registerReceiver(receiver, new IntentFilter(AppService.ACTION_UNFREEZE_APPS));
+
+        AppService.startUnfreezeApps(ctx, "com.android.contacts");
+
+        synchronized (lock) {
+            lock.wait(10000);
         }
 
-
+        if (!received) {
+            assertTrue(received);
+        }
     }
 
 }

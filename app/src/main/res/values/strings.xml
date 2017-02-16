@@ -60,4 +60,8 @@
     <string name="pref_about_version_key">about_version</string>
     <string name="pref_about_version_summary">Click to check update</string>
 
+    <!--app service-->
+    <string name="app_service_root_deny">Root Permission Deny</string>
+
+
 </resources>

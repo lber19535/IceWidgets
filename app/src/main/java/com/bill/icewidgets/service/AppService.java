@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bill.icewidgets.R;
 import com.bill.icewidgets.db.bean.AppItem;
 import com.bill.icewidgets.service.tools.CallbackCommand;
 import com.stericson.RootShell.exceptions.RootDeniedException;
@@ -349,7 +350,7 @@ public class AppService extends CountDownService {
 
 
     private void toastRootPermissionDenied() {
-        Toast.makeText(this, "Root Permission Denied", Toast.LENGTH_LONG);
+        Toast.makeText(this, getString(R.string.app_service_root_deny), Toast.LENGTH_LONG);
     }
 
 
