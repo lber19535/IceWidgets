@@ -8,6 +8,7 @@ import android.content.pm.ApplicationInfo;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.bill.icewidgets.service.AppService;
 
@@ -48,7 +49,7 @@ public class AppServiceTest {
                 }
             }
         };
-        ctx.registerReceiver(receiver, new IntentFilter(AppService.ACTION_FREEZE_APPS));
+        LocalBroadcastManager.getInstance(ctx).registerReceiver(receiver, new IntentFilter(AppService.ACTION_FREEZE_APPS));
 
         AppService.startFreezeApps(ctx, testAppPkg);
 
@@ -79,7 +80,7 @@ public class AppServiceTest {
                 }
             }
         };
-        ctx.registerReceiver(receiver, new IntentFilter(AppService.ACTION_UNFREEZE_APPS));
+        LocalBroadcastManager.getInstance(ctx).registerReceiver(receiver, new IntentFilter(AppService.ACTION_UNFREEZE_APPS));
 
         AppService.startUnfreezeApps(ctx, "com.android.contacts");
 

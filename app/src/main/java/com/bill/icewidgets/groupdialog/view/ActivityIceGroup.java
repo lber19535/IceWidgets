@@ -1,6 +1,9 @@
 package com.bill.icewidgets.groupdialog.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -154,4 +157,11 @@ public class ActivityIceGroup extends AppCompatActivity implements GroupContract
     public void bindGroupName(String name) {
         appGroupVM.groupName.set(name);
     }
+
+    @Override
+    public Context getCtx() {
+        return this;
+    }
+
+
 }

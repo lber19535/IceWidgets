@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ public class AppService extends CountDownService {
     private static final String ACTION_FREEZE_GROUP = "com.bill.icewidgets.action.FREEZE_GROUP";
 
     private static final String EXTRA_IS_FREEZE = "com.bill.icewidgets.service.extra.IS_FREEZE";
-    private static final String EXTRA_PACKAGES = "com.bill.com.icewidgets.extra.PACKAGES";
+    public static final String EXTRA_PACKAGES = "com.bill.com.icewidgets.extra.PACKAGES";
     private static final String EXTRA_WIDGETS_ID = "com.bill.com.icewidgets.extra.WIDGETS_ID";
 
 
@@ -176,10 +177,9 @@ public class AppService extends CountDownService {
         RealmResults<AppItem> items = realm.where(AppItem.class).beginGroup()
                 .equalTo("widgetsId", widgetsId)
                 .equalTo("isFreezed", false)
-                .equalTo("", AppItem.ITEM_TYPE_ADD | AppItem.ITEM_TYPE_FREEZE)
+                .equalTo("itemType", AppItem.ITEM_TYPE_ADD | AppItem.ITEM_TYPE_FREEZE)
                 .endGroup().findAll();
 
-        realm.close();
 
         int size = items.size();
         String[] pkgs = new String[size];
@@ -193,6 +193,8 @@ public class AppService extends CountDownService {
 
         handleFreezeApp(pkgs);
         handleNotifyFreeze(true, pkgs);
+
+        realm.close();
 
     }
 
@@ -224,7 +226,7 @@ public class AppService extends CountDownService {
             intent.setAction(ACTION_UNFREEZE_APPS);
             intent.putExtra(EXTRA_PACKAGES, packageNames);
         }
-        sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     private void handleLaunchApp(final CharSequence packageName) {

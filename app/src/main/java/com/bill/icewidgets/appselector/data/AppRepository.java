@@ -83,7 +83,7 @@ public class AppRepository implements AppDataSource {
         return (pair == null || pair.getGroupName().isEmpty()) ? "" : pair.getGroupName();
     }
 
-    public static List<ApplicationInfo> getAppInfos(PackageManager pm) {
+    private static List<ApplicationInfo> getAppInfos(PackageManager pm) {
         logd("method getAppInfos");
         List<ApplicationInfo> infos = new ArrayList<>();
         Intent intent = new Intent();
@@ -91,11 +91,7 @@ public class AppRepository implements AppDataSource {
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         List<ResolveInfo> resolveInfos;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | MATCH_DISABLED_COMPONENTS);
-        } else {
-            resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | GET_DISABLED_COMPONENTS);
-        }
+        resolveInfos = pm.queryIntentActivities(intent, GET_META_DATA | MATCH_DISABLED_COMPONENTS);
 
         for (int i = 0; i < resolveInfos.size(); i++) {
             ActivityInfo info = resolveInfos.get(i).activityInfo;
