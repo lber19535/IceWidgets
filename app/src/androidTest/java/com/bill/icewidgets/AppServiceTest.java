@@ -32,6 +32,7 @@ public class AppServiceTest {
 
     private boolean RECEIVE_FLAG = false;
     private Object lock = new Object();
+    static private long WAIT_SERVICE_TIME = 10000;
 
     private String testAppPkg = "com.android.contacts";
 
@@ -54,7 +55,7 @@ public class AppServiceTest {
         AppService.startFreezeApps(ctx, testAppPkg);
 
         synchronized (lock) {
-            lock.wait(10000);
+            lock.wait(WAIT_SERVICE_TIME);
         }
 
         if (!RECEIVE_FLAG) {
@@ -82,10 +83,10 @@ public class AppServiceTest {
         };
         LocalBroadcastManager.getInstance(ctx).registerReceiver(receiver, new IntentFilter(AppService.ACTION_UNFREEZE_APPS));
 
-        AppService.startUnfreezeApps(ctx, "com.android.contacts");
+        AppService.startUnfreezeApps(ctx, testAppPkg);
 
         synchronized (lock) {
-            lock.wait(10000);
+            lock.wait(WAIT_SERVICE_TIME);
         }
 
         if (!RECEIVE_FLAG) {
