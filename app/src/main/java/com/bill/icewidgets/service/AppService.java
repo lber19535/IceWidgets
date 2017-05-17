@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.db.bean.AppItem;
 import com.bill.icewidgets.service.tools.CallbackCommand;
+import com.bill.icewidgets.utils.ToastUtils;
 import com.stericson.RootShell.exceptions.RootDeniedException;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootShell.execution.Shell;
@@ -160,6 +161,7 @@ public class AppService extends CountDownService {
                     break;
                 case ACTION_FREEZE_GROUP:
                     handleFreezeGroup(intent.getIntExtra(EXTRA_WIDGETS_ID, INVALID_WIDGETS_ID));
+                    break;
                 default:
                     logd(action + " is not defined");
                     break;
@@ -179,8 +181,7 @@ public class AppService extends CountDownService {
                 .equalTo("isFreezed", false)
                 .equalTo("itemType", AppItem.ITEM_TYPE_ADD | AppItem.ITEM_TYPE_FREEZE)
                 .endGroup().findAll();
-
-
+        
         int size = items.size();
         String[] pkgs = new String[size];
         for (int i = 0; i < size; i++) {
@@ -259,6 +260,8 @@ public class AppService extends CountDownService {
                 e.printStackTrace();
                 toastRootPermissionDenied();
             }
+        } else {
+            toastNotRoot();
         }
     }
 
@@ -310,6 +313,8 @@ public class AppService extends CountDownService {
                 e.printStackTrace();
                 toastRootPermissionDenied();
             }
+        } else {
+            toastNotRoot();
         }
     }
 
@@ -347,14 +352,18 @@ public class AppService extends CountDownService {
                 e.printStackTrace();
                 toastRootPermissionDenied();
             }
+        } else {
+            toastNotRoot();
         }
     }
 
-
-    private void toastRootPermissionDenied() {
-        Toast.makeText(this, getString(R.string.app_service_root_deny), Toast.LENGTH_LONG);
+    private void toastNotRoot() {
+        ToastUtils.longToast(this, R.string.app_service_not_root);
     }
 
+    private void toastRootPermissionDenied() {
+        ToastUtils.longToast(this, R.string.app_service_root_deny);
+    }
 
     private static boolean isPackagesNameEmpty(CharSequence... packageNames) {
         if (packageNames.length == 0) {

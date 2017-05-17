@@ -61,7 +61,8 @@
     <string name="pref_about_version_summary">Click to check update</string>
 
     <!--app service-->
-    <string name="app_service_root_deny">Root Permission Deny</string>
+    <string name="app_service_root_deny">Root permission deny</string>
+    <string name="app_service_not_root">You haven't rooted your phone properly</string>
 
 
 </resources>
