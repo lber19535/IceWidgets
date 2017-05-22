@@ -19,6 +19,7 @@ import io.realm.RealmConfiguration;
 public class App extends Application {
 
     private static String CONDOM_BUGLY_TAG = "Bugly";
+    private static String APP_ID = "eae17414d4";
 
     @Override
     public void onCreate() {
@@ -43,10 +44,10 @@ public class App extends Application {
         if (BuildConfig.DEBUG) {
             // debug do not use bugly
         } else if (BuildConfig.PREVIEW) {
-            CrashReport.initCrashReport(CondomContext.wrap(this, CONDOM_BUGLY_TAG), "eae17414d4", true);
+            CrashReport.initCrashReport(CondomContext.wrap(this, CONDOM_BUGLY_TAG), APP_ID, true);
             CrashReport.setIsDevelopmentDevice(this, true);
         } else {
-            CrashReport.initCrashReport(CondomContext.wrap(this, CONDOM_BUGLY_TAG), "eae17414d4", false);
+            CrashReport.initCrashReport(CondomContext.wrap(this, CONDOM_BUGLY_TAG), APP_ID, false);
         }
     }
 
