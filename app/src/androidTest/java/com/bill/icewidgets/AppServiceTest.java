@@ -60,6 +60,7 @@ public class AppServiceTest {
 
         if (!RECEIVE_FLAG) {
             assertTrue(RECEIVE_FLAG);
+            RECEIVE_FLAG = false;
             return;
         }
 
@@ -91,6 +92,7 @@ public class AppServiceTest {
 
         if (!RECEIVE_FLAG) {
             assertTrue(RECEIVE_FLAG);
+            RECEIVE_FLAG = false;
         }
 
         ApplicationInfo applicationInfo = ctx.getPackageManager().getApplicationInfo(testAppPkg, 0);

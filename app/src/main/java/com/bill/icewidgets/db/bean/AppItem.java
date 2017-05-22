@@ -16,7 +16,7 @@ public class AppItem extends RealmObject {
      * !add + !disable   0000
      */
     @Ignore
-    public static final int ITEM_TYPE_ADD = 1 << 0;          // 0001
+    public static final int ITEM_TYPE_ADD = 1;          // 0001
     @Ignore
     public static final int ITEM_TYPE_FREEZE = 1 << 1;     // 0010
     @Ignore
