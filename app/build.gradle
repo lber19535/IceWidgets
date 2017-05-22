@@ -15,6 +15,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         renameApk("IceWidgets-" + versionName)
+
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
     }
     // This is handled for you by the 2.0+ Gradle Plugin
     aaptOptions {
@@ -92,8 +96,8 @@ dependencies {
     compile 'com.parse.bolts:bolts-applinks:1.4.0'
     compile 'com.android.support:support-vector-drawable:25.0.0'
     compile 'com.pnikosis:materialish-progress:1.7'
-    compile 'com.facebook.stetho:stetho:1.4.1'
-    compile 'com.uphyca:stetho_realm:2.0.0'
+    debugCompile 'com.facebook.stetho:stetho:1.4.1'
+    debugCompile 'com.uphyca:stetho_realm:2.0.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     // local test
