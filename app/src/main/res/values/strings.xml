@@ -62,7 +62,7 @@
 
     <!--app service-->
     <string name="app_service_root_deny">Root permission deny</string>
-    <string name="app_service_not_root">You haven't rooted your phone properly</string>
+    <string name="app_service_not_root">You haven\'t rooted your phone properly</string>
 
 
 </resources>

@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         classpath "io.realm:realm-gradle-plugin:2.2.1"
         classpath 'com.github.lber19535:drawable-optimizer:1.0.13'
         classpath 'com.tencent.bugly:symtabfileuploader:latest.release'
