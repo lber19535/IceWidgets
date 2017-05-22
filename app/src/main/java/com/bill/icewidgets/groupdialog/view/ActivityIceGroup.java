@@ -1,10 +1,7 @@
 package com.bill.icewidgets.groupdialog.view;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,7 +18,6 @@ import com.bill.icewidgets.common.events.CloseIceGroupEvent;
 import com.bill.icewidgets.databinding.ActivityIceGroupBinding;
 import com.bill.icewidgets.databinding.AppItemBinding;
 import com.bill.icewidgets.db.bean.AppItem;
-import com.bill.icewidgets.db.bean.NameIdPair;
 import com.bill.icewidgets.groupdialog.GroupContract;
 import com.bill.icewidgets.groupdialog.data.GroupRepository;
 import com.bill.icewidgets.groupdialog.presenter.GroupPresenter;
@@ -34,8 +30,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
-
-import io.realm.Realm;
 
 
 /**
@@ -135,8 +129,8 @@ public class ActivityIceGroup extends AppCompatActivity implements GroupContract
             AppItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(iceGroupBinding.appContainer.getContext()), R.layout.app_item, iceGroupBinding.appContainer, false);
             // change item margin
             GridLayout.LayoutParams params = (GridLayout.LayoutParams) binding.getRoot().getLayoutParams();
-            Resources res = iceGroupBinding.getRoot().getResources();
-            int padding = res.getDimensionPixelSize(R.dimen.app_item_padding);
+
+            int padding = getResources().getDimensionPixelSize(R.dimen.app_item_padding);
 
             if (i % columnCount == 1) {
                 params.setMargins(0, padding, padding, padding);

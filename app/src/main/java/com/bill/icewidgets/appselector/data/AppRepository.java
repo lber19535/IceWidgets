@@ -18,7 +18,6 @@ import java.util.List;
 
 import io.realm.Realm;
 
-import static android.content.pm.PackageManager.GET_DISABLED_COMPONENTS;
 import static android.content.pm.PackageManager.GET_META_DATA;
 import static android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS;
 

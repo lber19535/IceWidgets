@@ -1,9 +1,6 @@
 package com.bill.icewidgets.groupdialog;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 
 import com.bill.icewidgets.BasePresenter;
 import com.bill.icewidgets.BaseView;

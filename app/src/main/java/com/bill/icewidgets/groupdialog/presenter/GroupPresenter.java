@@ -1,23 +1,17 @@
 package com.bill.icewidgets.groupdialog.presenter;
 
 import android.content.IntentFilter;
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.bill.icewidgets.BuildConfig;
 import com.bill.icewidgets.db.bean.AppItem;
-import com.bill.icewidgets.db.bean.NameIdPair;
 import com.bill.icewidgets.groupdialog.FreezeStatusReceiver;
 import com.bill.icewidgets.groupdialog.GroupContract;
 import com.bill.icewidgets.groupdialog.data.GroupRepository;
-import com.bill.icewidgets.groupdialog.vm.AppItemVM;
 import com.bill.icewidgets.service.AppService;
 
 import java.util.List;
-
-import io.realm.Realm;
 
 /**
  * Created by Bill on 2016/12/16.

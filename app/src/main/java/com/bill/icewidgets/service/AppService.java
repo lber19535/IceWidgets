@@ -6,7 +6,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.bill.icewidgets.R;
 import com.bill.icewidgets.db.bean.AppItem;
@@ -181,7 +180,7 @@ public class AppService extends CountDownService {
                 .equalTo("isFreezed", false)
                 .equalTo("itemType", AppItem.ITEM_TYPE_ADD | AppItem.ITEM_TYPE_FREEZE)
                 .endGroup().findAll();
-        
+
         int size = items.size();
         String[] pkgs = new String[size];
         for (int i = 0; i < size; i++) {
